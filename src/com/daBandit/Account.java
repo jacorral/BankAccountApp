@@ -8,74 +8,89 @@ package com.daBandit;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.LongProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyListWrapper;
-import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableList;
-
-
 
 /**
  *
  * @author Jose Corral
  */
 public class Account implements Serializable {
-    
-   public enum Type{
-       CHECKING, SAVINGS
-   }
-    private final LongProperty balance = new SimpleLongProperty(this, "balance", 0);
+
+    public enum Type {
+
+        CHECKING, SAVINGS
+    }
+    private final DoubleProperty balance = new SimpleDoubleProperty(this, "balance");
     private final ObjectProperty<Type> type = new SimpleObjectProperty<>(this, "type");
 
     protected Account() {
     }
-    
+
     List<Double> transactions = new ArrayList<>();
-    
-    public Account (Account.Type type){
+
+    //constructor sets the initial balance of the account to $50
+    public Account(Account.Type type) {
         this.type.set(type);
+        this.setBalance(50.0);
     }
-    
-    
-    private long getBalance() {
+
+    public Double getBalance() {
         return balance.get();
     }
 
-    private void setBalance(long value) {
+    public void setBalance(Double value) {
         balance.set(value);
     }
 
-    private LongProperty balanceProperty() {
+    public DoubleProperty balanceProperty() {
         return balance;
     }
-    
-      
 
-
-    private Type getType() {
+    public Type getType() {
         return type.get();
     }
 
-    private void setType(Type value) {
+    public void setType(Type value) {
         type.set(value);
     }
 
-    private ObjectProperty typeProperty() {
+    public ObjectProperty typeProperty() {
         return type;
     }
-    
-   private void deposit(Double amt){
-       transactions.add(amt);
-       balance.add(amt);
-       
-   }
+
+    /*  Method to deposit amount specified
+     amount recorded on transactions list
+     */
+    public void deposit(Double amt) {
+        transactions.add(amt);
+        Double tmp = this.balance.get();
+        tmp = tmp + amt;
+        this.balance.set(tmp);
+
+    }
+
+    /*   Method to withdrawl specified amount
+     amount recorded on transactons list
    
-   public void withdrawl(Double amt){
-       transactions.add(amt);
-       balance.subtract(amt);
-   }
-   
+     */
+    public void withdrawl(Double amt) {
+        transactions.add(amt);
+        Double tmp = this.balance.get();
+        tmp = tmp - amt;
+        balance.set(tmp);
+    }
+
+    /*   Method that returns all of the transactions
+     in an array list
+     */
+    public ArrayList<Double> getAllTransactions() {
+        ArrayList<Double> copyList = new ArrayList<>();
+        this.transactions.forEach((amt) -> {
+            copyList.add(amt);
+        });
+        return copyList;
+    }
 }

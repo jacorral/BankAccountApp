@@ -5,10 +5,93 @@
  */
 package com.daBandit;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author angel
  */
 public class Holder {
+    public final long id;
+    private static long count = 1000;
+    private final StringProperty firstname = new SimpleStringProperty(this, "firstname", "");
+    private final StringProperty lastname = new SimpleStringProperty(this, "lastname", "");
+    private final ObjectProperty<Account> savings = new SimpleObjectProperty<>(this, "savings");
+    private final ObjectProperty<Account> checking = new SimpleObjectProperty<>(this, "checking");
+    
+    
+    
+    
+    
+    public Holder(String fn, String ln){
+        this.firstnameProperty().set(fn);
+        this.lastnameProperty().set(ln);
+        this.savingsProperty().set(new Account(Account.Type.SAVINGS));
+        this.checkingProperty().set(new Account(Account.Type.CHECKING));
+        this.id = count;
+        count++;
+    }
+
+    public String getFirstname() {
+        return firstname.get();
+    }
+
+    public void setFirstname(String value) {
+        firstname.set(value);
+    }
+
+    public StringProperty firstnameProperty() {
+        return firstname;
+    }
+    
+
+    public String getLastname() {
+        return lastname.get();
+    }
+
+    public void setLastname(String value) {
+        lastname.set(value);
+    }
+
+    public StringProperty lastnameProperty() {
+        return lastname;
+    }
+   
+
+    public Account getSavings() {
+        return savings.get();
+    }
+
+    public void setSavings(Account value) {
+        savings.set(value);
+    }
+
+    public ObjectProperty savingsProperty() {
+        return savings;
+    }
+    
+
+    public Account getChecking() {
+        return checking.get();
+    }
+
+    public void setChecking(Account value) {
+        checking.set(value);
+    }
+
+    public ObjectProperty checkingProperty() {
+        return checking;
+    }
+   
+    
+
+    
+    
+    
+    
+    
     
 }
