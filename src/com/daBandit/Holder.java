@@ -9,6 +9,9 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -21,16 +24,20 @@ public class Holder {
     private final StringProperty lastname = new SimpleStringProperty(this, "lastname", "");
     private final ObjectProperty<Account> savings = new SimpleObjectProperty<>(this, "savings");
     private final ObjectProperty<Account> checking = new SimpleObjectProperty<>(this, "checking");
+   
     
-    
+    public final ObservableMap<Long, Account> checkingMap = 
+            FXCollections.observableMap(new ConcurrentHashMap<Long, Account>());
+    public final ObservableMap<Long, Account> savingsMap =
+            FXCollections.observableMap(new ConcurrentHashMap<Long, Account>());
     
     
     
     public Holder(String fn, String ln){
-        this.firstnameProperty().set(fn);
-        this.lastnameProperty().set(ln);
-        this.savingsProperty().set(new Account(Account.Type.SAVINGS));
-        this.checkingProperty().set(new Account(Account.Type.CHECKING));
+        this.firstname.set(fn);
+        this.lastname.set(ln);
+        this.savings.set(new Account(Account.Type.SAVINGS));
+        this.checking.set(new Account(Account.Type.CHECKING));
         this.id = count;
         count++;
     }
@@ -86,12 +93,10 @@ public class Holder {
         return checking;
     }
    
+    /*
+    Implementation of checking and savings maps
+    */
     
 
-    
-    
-    
-    
-    
     
 }

@@ -34,6 +34,7 @@ public class Account implements Serializable {
     //constructor sets the initial balance of the account to $50
     public Account(Account.Type type) {
         this.type.set(type);
+        this.transactions.addAll(this.getAllTransactions());
         this.setBalance(50.0);
     }
 
@@ -62,7 +63,7 @@ public class Account implements Serializable {
     }
 
     /*  Method to deposit amount specified
-     amount recorded on transactions list
+        Record amount on transactions list
      */
     public void deposit(Double amt) {
         transactions.add(amt);
@@ -72,8 +73,8 @@ public class Account implements Serializable {
 
     }
 
-    /*   Method to withdrawl specified amount
-     amount recorded on transactons list
+    /*  Method to withdrawl specified amount
+        Record amount on transactons list
    
      */
     public void withdrawl(Double amt) {
@@ -84,9 +85,9 @@ public class Account implements Serializable {
     }
 
     /*   Method that returns all of the transactions
-     in an array list
+     in an array list for the account created
      */
-    public ArrayList<Double> getAllTransactions() {
+    public  ArrayList<Double> getAllTransactions() {
         ArrayList<Double> copyList = new ArrayList<>();
         this.transactions.forEach((amt) -> {
             copyList.add(amt);
