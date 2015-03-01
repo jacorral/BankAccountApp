@@ -6,9 +6,6 @@
 package com.daBandit;
 
 import java.util.ArrayList;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.collections.ObservableList;
 
 /**
  *

@@ -67,12 +67,15 @@ public class Account implements Serializable {
         Record amount on transactions list
      */
     public void deposit(Double amt) {
+        if (amt < 0){
+        System.out.println("Please enter a valid amount!");
+            
+        } else{
         transactions.add(amt);
         Double tmp = this.balance.get();
         tmp = tmp + amt;
         this.balance.set(tmp);
-        
-
+        } 
     }
 
     /*  Method to withdrawl specified amount
@@ -80,11 +83,16 @@ public class Account implements Serializable {
    
      */
     public void withdrawl(Double amt) {
-        transactions.add(-amt);
+        
         Double tmp = this.balance.get();
         tmp = tmp - amt;
+        if (tmp < 0){
+            System.out.println("OUT OF FUNDS!!! "
+                    + "Please enter a differnt amount.  Overdrawn by:  " + (-tmp));
+        }else{
         this.balance.set(tmp);
-        
+        transactions.add(-amt);
+        }
     }
 
     /*   Method that returns all of the transactions
