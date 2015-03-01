@@ -98,13 +98,16 @@ private final Bank bank = Bank.getInstance();
 
     @FXML
     private void summaryAction(ActionEvent event) {
+        System.out.println("Pressed Summary");
     }
 
     @FXML
     private void withdrawlAction(ActionEvent event) {
+        System.out.println("Pressed Withdrawl");
     }
 
     @FXML
     private void depostAction(ActionEvent event) {
+        System.out.println("Pressed Deposit");
     }
 }
