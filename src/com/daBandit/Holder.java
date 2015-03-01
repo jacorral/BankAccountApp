@@ -5,6 +5,7 @@
  */
 package com.daBandit;
 
+import java.io.Serializable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,12 +13,13 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import java.util.concurrent.ConcurrentHashMap;
+import javafx.collections.MapChangeListener;
 
 /**
  *
  * @author angel
  */
-public class Holder {
+public class Holder implements Serializable {
     public final long id;
     private static long count = 1000;
     private final StringProperty firstname = new SimpleStringProperty(this, "firstname", "");
@@ -25,11 +27,12 @@ public class Holder {
     private final ObjectProperty<Account> savings = new SimpleObjectProperty<>(this, "savings");
     private final ObjectProperty<Account> checking = new SimpleObjectProperty<>(this, "checking");
    
-    
-    public final ObservableMap<Long, Account> checkingMap = 
-            FXCollections.observableMap(new ConcurrentHashMap<Long, Account>());
-    public final ObservableMap<Long, Account> savingsMap =
-            FXCollections.observableMap(new ConcurrentHashMap<Long, Account>());
+    //Not sure of these will be needed here
+    public final ObservableMap<String, Double> observableCheckingMap = 
+            FXCollections.observableMap(new ConcurrentHashMap<String, Double>());
+    public final ObservableMap<String, Double> observableSavingsMap =
+            FXCollections.observableMap(new ConcurrentHashMap<String, Double>());
+   
     
     
     
@@ -41,6 +44,13 @@ public class Holder {
         this.id = count;
         count++;
     }
+   /* Not sure if these will be needed
+   public void addCheckingListener(MapChangeListener<? super String, ? super Double> ml){
+       observableCheckingMap.addListener(ml);
+   }
+   public void addSavingsListener(MapChangeListener<? super String, ? super Double> ml){
+       observableSavingsMap.addListener(ml);
+   }*/
 
     public String getFirstname() {
         return firstname.get();
@@ -92,11 +102,7 @@ public class Holder {
     public ObjectProperty checkingProperty() {
         return checking;
     }
-   
-    /*
-    Implementation of checking and savings maps
-    */
     
-
+  
     
 }

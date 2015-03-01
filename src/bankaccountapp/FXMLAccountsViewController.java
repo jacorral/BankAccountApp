@@ -48,9 +48,10 @@ private final Bank bank = Bank.getInstance();
         Holder th;
         for (int i = 0; i < hl.size(); i++){
           th =  hl.get(i);
-          th.getChecking().deposit(134.0);
-          th.getChecking().deposit(45.0);
-          th.getSavings().withdrawl(20.0);
+          th.getChecking().deposit(100.0);
+          th.getChecking().deposit(200.0);
+          th.getSavings().deposit(100.0);
+          th.getSavings().withdrawl(50.0);
           System.out.println("ID:  " + th.id);
           System.out.println("First Name:  " + th.getFirstname());
          System.out.println("Last Name:  " + th.getLastname());
