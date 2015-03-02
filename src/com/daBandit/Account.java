@@ -37,7 +37,7 @@ public class Account implements Serializable {
     //constructor sets the initial balance of the account to $50
     public Account(Account.Type type) {
         this.type.set(type);
-        this.setBalance(50.0);
+        this.setBalance(50.00);
         this.transaction.add(this.getBalance());
         
     }
