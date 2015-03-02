@@ -8,7 +8,10 @@ package bankaccountapp;
 import com.daBandit.Bank;
 import com.daBandit.Holder;
 import java.net.URL;
+import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
@@ -35,6 +38,9 @@ public class FXMLAccountsViewController implements Initializable {
 private final Bank bank = Bank.getInstance();
 private Holder theHolder = null;
 private ObservableList<Holder> holderList = FXCollections.observableArrayList();
+
+private Currency currentCurrency;
+private NumberFormat currencyFormatter;
     
     private Label label;
     @FXML
@@ -127,18 +133,28 @@ private ObservableList<Holder> holderList = FXCollections.observableArrayList();
     }
     
    private void buildView(Holder h){
+       Locale locale = new Locale("en","US");
        StringConverter sc = new DoubleStringConverter();
+       currentCurrency = Currency.getInstance(locale);
+       currencyFormatter = NumberFormat.getCurrencyInstance(locale);
        
        idTextField.setText(Long.toString(h.id));
        firstnameTextField.textProperty().bindBidirectional(h.firstnameProperty());
        lastnameTextField.textProperty().bindBidirectional(h.lastnameProperty());
-       //savingsBalanceTextField.textProperty().bindBidirectional(h.getSavings().balanceProperty(), sc);
-       //checkingBalanceTextField.textProperty().bindBidirectional(h.getChecking().balanceProperty(), sc);
+      /*
        checkingBalanceTextField.textProperty().bindBidirectional
                 (new SimpleDoubleProperty(h.getChecking().getBalance()), sc);
-       savingsBalanceTextField.textProperty().bindBidirectional
-               ((new SimpleDoubleProperty(h.getSavings().getBalance())), sc);
       
+       savingsBalanceTextField.textProperty().bindBidirectional
+               ((new SimpleDoubleProperty(h.getSavings().getBalance())), sc);*/
+       
+       checkingBalanceTextField.textProperty().bindBidirectional
+               ((new SimpleDoubleProperty(h.getChecking().getBalance())), currencyFormatter);
+       
+       savingsBalanceTextField.textProperty().bindBidirectional
+               ((new SimpleDoubleProperty(h.getSavings().getBalance())), currencyFormatter);
+       
+      // checkingBalanceTextField.textProperty().bindBidirectional(null, null);
       // System.out.println("Savings balance: " + h.getSavings().getBalance());
    }
    
