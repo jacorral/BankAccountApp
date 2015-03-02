@@ -6,7 +6,11 @@
 package com.daBandit;
 
 import java.io.Serializable;
+import java.util.Objects;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyStringProperty;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -25,13 +29,40 @@ public class Holder implements Serializable {
             new SimpleObjectProperty<>(this, "savings", new Account(Account.Type.SAVINGS));
     private final ObjectProperty<Account> checking =
             new SimpleObjectProperty<>(this, "checking", new Account(Account.Type.CHECKING));
+    
+    private final StringBinding fullNameBinding = new StringBinding() {
+        {
+            super.bind(firstname, lastname);
+        }
+        
+        
+        
+          @Override
+            protected String computeValue() {
+                StringBuilder sb = new StringBuilder();
+                if (!firstname.get().isEmpty()){
+                    sb.append(firstname.get());
+                }
+                if (!lastname.get().isEmpty()){
+                    sb.append(" ").append(lastname.get());
+                }
+                
+                return sb.toString();
+            }
+
+        
+
+     
+    };       
+    
+   
    
     
     public Holder(Holder holder){
         this.firstname.set(holder.getFirstname());
         this.lastname.set(holder.getLastname());
-        this.id = count;
-        count++;
+        this.id = holder.id;
+        
     }
    
     
@@ -42,7 +73,17 @@ public class Holder implements Serializable {
         count++;
     }
     
-    
+     private final ReadOnlyStringWrapper fullname =
+           new ReadOnlyStringWrapper(this, "fullname");
+     
+     public final ReadOnlyStringProperty fullnameProperty(){
+         return fullname.getReadOnlyProperty();
+     }
+     
+     public final String getFullname(){
+         return fullname.get();
+     }
+     
   
 
     public String getFirstname() {
@@ -95,6 +136,52 @@ public class Holder implements Serializable {
     public ObjectProperty<Account> checkingProperty() {
         return checking;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+                if (!firstname.get().isEmpty()){
+                    sb.append(firstname.get());
+                }
+                if (!lastname.get().isEmpty()){
+                    sb.append(" ").append(lastname.get());
+                }
+        return sb.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 37 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 37 * hash + Objects.hashCode(this.firstname);
+        hash = 37 * hash + Objects.hashCode(this.lastname);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Holder other = (Holder) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.firstname, other.firstname)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastname, other.lastname)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
+    
     
     
 }

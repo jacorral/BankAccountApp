@@ -7,10 +7,14 @@ package bankaccountapp;
 
 import com.daBandit.Bank;
 import com.daBandit.Holder;
-import java.util.ArrayList;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.MapChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,6 +34,7 @@ import javafx.util.converter.DoubleStringConverter;
 public class FXMLAccountsViewController implements Initializable {
 private final Bank bank = Bank.getInstance();
 private Holder theHolder = null;
+private ObservableList<Holder> holderList = FXCollections.observableArrayList();
     
     private Label label;
     @FXML
@@ -75,7 +80,7 @@ private Holder theHolder = null;
         
     }
     public void testPrint(){
-        ArrayList<Holder> hl = bank.getAllHolders();
+        List<Holder> hl = bank.getAllHolders();
         Holder th = null;
         for (int i = 0; i < hl.size(); i++){
           th =  hl.get(i);
@@ -101,26 +106,43 @@ private Holder theHolder = null;
        idTextField.setText(Long.toString(h.id));
        firstnameTextField.textProperty().bindBidirectional(h.firstnameProperty());
        lastnameTextField.textProperty().bindBidirectional(h.lastnameProperty());
-       savingsBalanceTextField.textProperty().bindBidirectional(h.getSavings().balanceProperty(), sc);
+       //savingsBalanceTextField.textProperty().bindBidirectional(h.getSavings().balanceProperty(), sc);
        checkingBalanceTextField.textProperty().bindBidirectional(h.getChecking().balanceProperty(), sc);
        
+       savingsBalanceTextField.textProperty().bindBidirectional
+               (new SimpleDoubleProperty(h.getSavings().getBalance()), sc);
    }
    
    private void buildTreeView(TreeItem<Holder> root){
-      // bank.addListener(holderTreeListener);
+       bank.addListener(holderTreeListener);
        
-       bank.getAllHolders().stream().forEach((h) ->{
-           root.getChildren().add(new TreeItem<>(h));
+       bank.getAllHolders().stream().forEach((h)-> {
+        root.getChildren().add(new TreeItem<>(h));
        });
+       
    }
+   
+   private final MapChangeListener<Long,Holder> holderTreeListener =
+           (change) -> {
+               if (change.getValueAdded() != null){
+                   for (TreeItem<Holder> node : holderTreeView.getRoot().getChildren()){
+                       if (change.getKey().equals(node.getValue().id)){
+                           node.setValue(change.getValueAdded());
+                           return;
+                       }
+                   }
+               }
+               
+           };
+   
+   
    private final ChangeListener<TreeItem<Holder>> treeSelectionListener =
            (ov, oldValue, newValue) -> {
            TreeItem<Holder> treeItem = newValue;
-           if (treeItem == null || treeItem.equals(holderTreeView.getRoot())){
-            //clearForm();
-            return;
-            }
+          
            theHolder = new Holder(treeItem.getValue());
+           System.out.println("First name:  " + treeItem.getValue().getFirstname() + " " +
+                        treeItem.getValue().getLastname());
            buildView(theHolder);
            
            };
