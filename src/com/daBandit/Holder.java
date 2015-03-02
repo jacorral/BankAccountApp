@@ -61,6 +61,8 @@ public class Holder implements Serializable {
     public Holder(Holder holder){
         this.firstname.set(holder.getFirstname());
         this.lastname.set(holder.getLastname());
+        this.checking.set((holder.getChecking()));
+        this.savings.set(holder.getSavings());
         this.id = holder.id;
         
     }

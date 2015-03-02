@@ -110,7 +110,8 @@ private ObservableList<Holder> holderList = FXCollections.observableArrayList();
        checkingBalanceTextField.textProperty().bindBidirectional(h.getChecking().balanceProperty(), sc);
        
        savingsBalanceTextField.textProperty().bindBidirectional
-               (new SimpleDoubleProperty(h.getSavings().getBalance()), sc);
+               ((new SimpleDoubleProperty(h.getSavings().getBalance())), sc);
+       System.out.println("Savings balance: " + h.getSavings().getBalance());
    }
    
    private void buildTreeView(TreeItem<Holder> root){
@@ -118,6 +119,7 @@ private ObservableList<Holder> holderList = FXCollections.observableArrayList();
        
        bank.getAllHolders().stream().forEach((h)-> {
         root.getChildren().add(new TreeItem<>(h));
+        System.out.println("Tree Item:  "+ h.getFirstname()+ " " + h.getSavings().getAllTransactions());
        });
        
    }
@@ -139,10 +141,13 @@ private ObservableList<Holder> holderList = FXCollections.observableArrayList();
    private final ChangeListener<TreeItem<Holder>> treeSelectionListener =
            (ov, oldValue, newValue) -> {
            TreeItem<Holder> treeItem = newValue;
+          // System.out.println("New tree Item" + newValue.getValue().getChecking().getAllTransactions());
           
-           theHolder = new Holder(treeItem.getValue());
-           System.out.println("First name:  " + treeItem.getValue().getFirstname() + " " +
+           theHolder =  treeItem.getValue();
+           /* System.out.println("Name:  " + treeItem.getValue().getFirstname() + " " +
                         treeItem.getValue().getLastname());
+            System.out.println("Savings balance:  " + treeItem.getValue().getSavings().getBalance() +
+                   "  Transactions" + treeItem.getValue().getSavings().getAllTransactions()); */
            buildView(theHolder);
            
            };

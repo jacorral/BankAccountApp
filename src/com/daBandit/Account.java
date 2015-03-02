@@ -43,15 +43,15 @@ public class Account implements Serializable {
     }
 
     public Double getBalance() {
-        return balance.get();
+        return this.balance.get();
     }
 
     public void setBalance(Double value) {
-        balance.set(value);
+        this.balance.set(value);
     }
 
     public DoubleProperty balanceProperty() {
-        return balance;
+        return this.balance;
     }
 
     public Type getType() {
@@ -80,7 +80,8 @@ public class Account implements Serializable {
         transaction.add(amt);
         Double tmp = this.balance.get();
         tmp = tmp + amt;
-        this.balance.set(tmp);
+        this.setBalance(tmp);
+       // this.balanceProperty().add(amt);
         } 
     }
 
@@ -96,7 +97,7 @@ public class Account implements Serializable {
             System.out.println("OUT OF FUNDS!!! "
                     + "Please enter a differnt amount.  Overdrawn by:  " + (-tmp));
         }else{
-        this.balance.set(tmp);
+        this.setBalance(tmp);
         transaction.add(-amt);
         }
     }
