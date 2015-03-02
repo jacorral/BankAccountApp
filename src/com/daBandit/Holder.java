@@ -10,9 +10,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -23,33 +20,30 @@ public class Holder implements Serializable {
     private static long count = 1000;
     private final StringProperty firstname = new SimpleStringProperty(this, "firstname", "");
     private final StringProperty lastname = new SimpleStringProperty(this, "lastname", "");
-    private final ObjectProperty<Account> savings = new SimpleObjectProperty<>(this, "savings");
-    private final ObjectProperty<Account> checking = new SimpleObjectProperty<>(this, "checking");
-   
-    //Not sure of these will be needed here
-    public final ObservableMap<String, Double> observableCheckingMap = 
-            FXCollections.observableMap(new ConcurrentHashMap<String, Double>());
-    public final ObservableMap<String, Double> observableSavingsMap =
-            FXCollections.observableMap(new ConcurrentHashMap<String, Double>());
+    
+    public final ObjectProperty<Account> savings =
+            new SimpleObjectProperty<>(this, "savings", new Account(Account.Type.SAVINGS));
+    private final ObjectProperty<Account> checking =
+            new SimpleObjectProperty<>(this, "checking", new Account(Account.Type.CHECKING));
    
     
-    
+    public Holder(Holder holder){
+        this.firstname.set(holder.getFirstname());
+        this.lastname.set(holder.getLastname());
+        this.id = count;
+        count++;
+    }
+   
     
     public Holder(String fn, String ln){
         this.firstname.set(fn);
         this.lastname.set(ln);
-        this.savings.set(new Account(Account.Type.SAVINGS));
-        this.checking.set(new Account(Account.Type.CHECKING));
         this.id = count;
         count++;
     }
-   /* Not sure if these will be needed
-   public void addCheckingListener(MapChangeListener<? super String, ? super Double> ml){
-       observableCheckingMap.addListener(ml);
-   }
-   public void addSavingsListener(MapChangeListener<? super String, ? super Double> ml){
-       observableSavingsMap.addListener(ml);
-   }*/
+    
+    
+  
 
     public String getFirstname() {
         return firstname.get();
@@ -85,7 +79,7 @@ public class Holder implements Serializable {
         savings.set(value);
     }
 
-    public ObjectProperty savingsProperty() {
+    public ObjectProperty<Account> savingsProperty() {
         return savings;
     }
     
@@ -98,10 +92,9 @@ public class Holder implements Serializable {
         checking.set(value);
     }
 
-    public ObjectProperty checkingProperty() {
+    public ObjectProperty<Account> checkingProperty() {
         return checking;
     }
     
-  
     
 }

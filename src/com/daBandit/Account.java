@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 /**
@@ -25,17 +27,18 @@ public class Account implements Serializable {
     }
     private final DoubleProperty balance = new SimpleDoubleProperty(this, "balance");
     private final ObjectProperty<Type> type = new SimpleObjectProperty<>(this, "type");
+   // private final ListProperty<Double> transactions = new SimpleListProperty<>(this,"transactions");
 
     protected Account() {
     }
 
-    List<Double> transactions = new ArrayList<>();
+    List<Double> transaction = new ArrayList<>();
 
     //constructor sets the initial balance of the account to $50
     public Account(Account.Type type) {
         this.type.set(type);
         this.setBalance(50.0);
-        this.transactions.add(this.getBalance());
+        this.transaction.add(this.getBalance());
         
     }
 
@@ -62,6 +65,9 @@ public class Account implements Serializable {
     public ObjectProperty typeProperty() {
         return type;
     }
+    
+    
+    
 
     /*  Method to deposit amount specified
         Record amount on transactions list
@@ -71,7 +77,7 @@ public class Account implements Serializable {
         System.out.println("Please enter a valid amount!");
             
         } else{
-        transactions.add(amt);
+        transaction.add(amt);
         Double tmp = this.balance.get();
         tmp = tmp + amt;
         this.balance.set(tmp);
@@ -91,7 +97,7 @@ public class Account implements Serializable {
                     + "Please enter a differnt amount.  Overdrawn by:  " + (-tmp));
         }else{
         this.balance.set(tmp);
-        transactions.add(-amt);
+        transaction.add(-amt);
         }
     }
 
@@ -100,7 +106,7 @@ public class Account implements Serializable {
      */
     public  ArrayList<Double> getAllTransactions() {
         ArrayList<Double> copyList = new ArrayList<>();
-        this.transactions.forEach((amt) -> {
+        this.transaction.forEach((amt) -> {
             copyList.add(amt);
         });
         return copyList;

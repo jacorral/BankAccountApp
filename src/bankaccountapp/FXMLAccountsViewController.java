@@ -10,6 +10,7 @@ import com.daBandit.Holder;
 import java.util.ArrayList;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
@@ -27,6 +29,7 @@ import javafx.util.converter.DoubleStringConverter;
  */
 public class FXMLAccountsViewController implements Initializable {
 private final Bank bank = Bank.getInstance();
+private Holder theHolder = null;
     
     private Label label;
     @FXML
@@ -42,7 +45,7 @@ private final Bank bank = Bank.getInstance();
     @FXML
     private TextArea reportTextArea;
     @FXML
-    private TreeView<?> holderTreeView;
+    private TreeView<Holder> holderTreeView;
     @FXML
     private Button summaryButton;
     @FXML
@@ -55,6 +58,14 @@ private final Bank bank = Bank.getInstance();
     public void initialize(URL url, ResourceBundle rb) {
         buildBank();
         testPrint();
+        
+        TreeItem<Holder> rootNode = new TreeItem<>(
+            new Holder("Account Holders", ""));
+        buildTreeView(rootNode);
+        holderTreeView.setRoot(rootNode);
+        holderTreeView.getRoot().setExpanded(true);
+        holderTreeView.getSelectionModel().selectedItemProperty()
+                .addListener(treeSelectionListener);
     }    
     
     
@@ -68,10 +79,10 @@ private final Bank bank = Bank.getInstance();
         Holder th = null;
         for (int i = 0; i < hl.size(); i++){
           th =  hl.get(i);
-          th.getChecking().deposit(-100.0);
-          th.getChecking().deposit(200.0);
+          th.getChecking().deposit(100.0);
+          th.getChecking().withdrawl(75.00);
           th.getSavings().deposit(100.0);
-          th.getSavings().withdrawl(500.0);
+          th.getSavings().withdrawl(50.0);
           System.out.println("ID:  " + th.id);
           System.out.println("First Name:  " + th.getFirstname());
          System.out.println("Last Name:  " + th.getLastname());
@@ -90,11 +101,29 @@ private final Bank bank = Bank.getInstance();
        idTextField.setText(Long.toString(h.id));
        firstnameTextField.textProperty().bindBidirectional(h.firstnameProperty());
        lastnameTextField.textProperty().bindBidirectional(h.lastnameProperty());
-       
        savingsBalanceTextField.textProperty().bindBidirectional(h.getSavings().balanceProperty(), sc);
        checkingBalanceTextField.textProperty().bindBidirectional(h.getChecking().balanceProperty(), sc);
        
    }
+   
+   private void buildTreeView(TreeItem<Holder> root){
+      // bank.addListener(holderTreeListener);
+       
+       bank.getAllHolders().stream().forEach((h) ->{
+           root.getChildren().add(new TreeItem<>(h));
+       });
+   }
+   private final ChangeListener<TreeItem<Holder>> treeSelectionListener =
+           (ov, oldValue, newValue) -> {
+           TreeItem<Holder> treeItem = newValue;
+           if (treeItem == null || treeItem.equals(holderTreeView.getRoot())){
+            //clearForm();
+            return;
+            }
+           theHolder = new Holder(treeItem.getValue());
+           buildView(theHolder);
+           
+           };
 
     @FXML
     private void summaryAction(ActionEvent event) {
