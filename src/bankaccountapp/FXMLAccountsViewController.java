@@ -109,8 +109,8 @@ private ObservableList<Holder> holderList = FXCollections.observableArrayList();
        //savingsBalanceTextField.textProperty().bindBidirectional(h.getSavings().balanceProperty(), sc);
        checkingBalanceTextField.textProperty().bindBidirectional(h.getChecking().balanceProperty(), sc);
        
-       savingsBalanceTextField.textProperty().bindBidirectional
-               ((new SimpleDoubleProperty(h.getSavings().getBalance())), sc);
+        savingsBalanceTextField.textProperty().bindBidirectional
+               ((new SimpleDoubleProperty(h.getSavings().getBalance())), sc); 
        System.out.println("Savings balance: " + h.getSavings().getBalance());
    }
    
