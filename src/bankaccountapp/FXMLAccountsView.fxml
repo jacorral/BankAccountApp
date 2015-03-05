@@ -38,7 +38,10 @@
       <HBox layoutX="260.0" layoutY="165.0" spacing="5.0">
          <children>
             <Button fx:id="summaryButton" layoutX="307.0" layoutY="167.0" mnemonicParsing="false" onAction="#summaryAction" text="Summary" />
-            <Button fx:id="withdrawlButton" layoutX="394.0" layoutY="167.0" mnemonicParsing="false" onAction="#withdrawlAction" text="WIthdrawl" />
+            <Button fx:id="withdrawlButton" layoutX="394.0" layoutY="167.0" mnemonicParsing="false" onAction="#withdrawlAction" text="WIthdrawl">
+               <tooltip>
+                  <Tooltip fx:id="withdrawlPopUp" text="Savings" />
+               </tooltip></Button>
             <Button fx:id="depositButton" layoutX="483.0" layoutY="166.0" mnemonicParsing="false" onAction="#depostAction" text="Deposit" />
          </children>
       </HBox>

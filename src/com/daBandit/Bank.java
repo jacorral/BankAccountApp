@@ -25,7 +25,7 @@ public class Bank {
     
     public static Bank instance = null;
     
-    ArrayList<Holder> holders = new ArrayList<>();
+    //ArrayList<Holder> holders = new ArrayList<>();
     
 
     protected Bank(){
@@ -55,10 +55,7 @@ public class Bank {
     public void deleteHolder(Holder h){
         observableMap.remove(h.id);
     }
-    /*
-    public void addListener(ListChangeListener<? super Holder> hl){
-        observableList.addListener(hl);
-    } */
+   
     
     
     public void addHolder(String fn, String ln){
