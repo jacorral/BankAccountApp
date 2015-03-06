@@ -25,7 +25,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.util.StringConverter;
@@ -39,7 +38,6 @@ public class FXMLAccountsViewController implements Initializable {
 private final Bank bank = Bank.getInstance();
 private Holder theHolder = null;
 private ObservableList<Holder> holderList = FXCollections.observableArrayList();
-//private ObservableList<String> accountsList = FXCollections.observableArrayList();
 
 private Currency currentCurrency;
 private NumberFormat currencyFormatter;
@@ -71,7 +69,6 @@ private NumberFormat currencyFormatter;
     public void initialize(URL url, ResourceBundle rb) {
         buildBank();
         //testPrint();
-               
         
         TreeItem<Holder> rootNode = new TreeItem<>(
             new Holder("Account Holders", ""));
@@ -94,7 +91,7 @@ private NumberFormat currencyFormatter;
         h1.getChecking().withdrawl(3456.33);
         
         h2.getChecking().deposit(9876.12);
-        h2.getSavings().deposit(10145.23);
+        h2.getSavings().deposit(8945.23);
         
         h3.getChecking().deposit(8945.12);
         h3.getSavings().deposit(8645.89);
@@ -107,33 +104,30 @@ private NumberFormat currencyFormatter;
     public void testPrint(){
         List<Holder> hl = bank.getAllHolders();
         Holder th = null;
-    for (Holder hl1 : hl) {
-        th = hl1;
-        switch (th.getFirstname()) {
-            case "Mickey":
-                th.getChecking().deposit(35.56);
-                th.getSavings().deposit(45.56);
-                break;
-            case "Angel":
-                th.getChecking().deposit(1456.24);
-                th.getSavings().deposit(7893.90);
-                break;
+        for (int i = 0; i < hl.size(); i++){
+          th =  hl.get(i);
+          if(th.getFirstname()== "Mickey"){
+              th.getChecking().deposit(35.56);
+              th.getSavings().deposit(45.56);
+          }else if(th.getFirstname() == "Angel"){
+              th.getChecking().deposit(1456.24);
+              th.getSavings().deposit(7893.90);
+          }
+          th.getChecking().deposit(100.0);
+          th.getChecking().withdrawl(75.00);
+          th.getSavings().deposit(100.0);
+          th.getSavings().withdrawl(50.0);
+          System.out.println("ID:  " + th.id);
+          System.out.println("First Name:  " + th.getFirstname());
+         System.out.println("Last Name:  " + th.getLastname());
+         System.out.println("checking balance:  "+ th.getChecking().getBalance());
+         System.out.println("savings balance:  "+ th.getSavings().getBalance());
+         System.out.println("Get all trans:  " + th.getChecking().getAllTransactions());
+         System.out.println("Get all trans:  " + th.getSavings().getAllTransactions());
         }
-        th.getChecking().deposit(100.0);
-        th.getChecking().withdrawl(75.00);
-        th.getSavings().deposit(100.0);
-        th.getSavings().withdrawl(50.0);
-        System.out.println("ID:  " + th.id);
-        System.out.println("First Name:  " + th.getFirstname());
-        System.out.println("Last Name:  " + th.getLastname());
-        System.out.println("checking balance:  "+ th.getChecking().getBalance());
-        System.out.println("savings balance:  "+ th.getSavings().getBalance());
-        System.out.println("Get all trans:  " + th.getChecking().getAllTransactions());
-        System.out.println("Get all trans:  " + th.getSavings().getAllTransactions());
-    }
-    
-    
-    buildView(th);
+        
+        
+        buildView(th);
         
        
     }
@@ -216,6 +210,4 @@ private NumberFormat currencyFormatter;
     private void depostAction(ActionEvent event) {
         System.out.println("Pressed Deposit");
     }
-
-
 }

@@ -93,7 +93,7 @@ public class Holder implements Serializable {
     }
 
     public void setFirstname(String value) {
-        this.firstname.set(value);
+        firstname.set(value);
     }
 
     public StringProperty firstnameProperty() {
@@ -106,7 +106,7 @@ public class Holder implements Serializable {
     }
 
     public void setLastname(String value) {
-        this.lastname.set(value);
+        lastname.set(value);
     }
 
     public StringProperty lastnameProperty() {
