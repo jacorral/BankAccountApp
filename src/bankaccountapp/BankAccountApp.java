@@ -19,7 +19,7 @@ public class BankAccountApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLAccountsView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLBankView.fxml"));
         
         Scene scene = new Scene(root);
         stage.setTitle("Bank Account App");
