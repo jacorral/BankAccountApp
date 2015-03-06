@@ -22,7 +22,7 @@ public class BankAccountApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLAccountsView.fxml"));
         
         Scene scene = new Scene(root);
-        
+        stage.setTitle("Bank Account App");
         stage.setScene(scene);
         stage.show();
     }

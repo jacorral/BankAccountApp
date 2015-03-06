@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="Reverse engineered bankaccountapp 2015.03.05 11-59-17-761">
+  <ClassDiagramComponents>
+    <Class xPosition="20.0" yPosition="20.0" package="bankaccountapp" name="BankAccountApp" visibility="public">
+      <Constructors/>
+      <Fields/>
+      <Methods>
+        <Method name="start" visibility="public" returnType="void">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+        <Method name="main" visibility="public" returnType="void" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>

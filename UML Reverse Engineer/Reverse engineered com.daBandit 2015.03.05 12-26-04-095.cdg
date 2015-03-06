@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="Reverse engineered com.daBandit 2015.03.05 12-26-04-095">
+  <ClassDiagramComponents>
+    <Class xPosition="20.0" yPosition="20.0" package="com.daBandit" name="Holder" visibility="public">
+      <Constructors>
+        <Constructor name="Holder" visibility="public">
+          <Argument type="Holder" name="holder"/>
+        </Constructor>
+        <Constructor name="Holder" visibility="public">
+          <Argument type="String" name="fn"/>
+          <Argument type="String" name="ln"/>
+        </Constructor>
+      </Constructors>
+      <Fields>
+        <Field name="id" visibility="public" type="long" isFinal="true"/>
+        <Field name="count" visibility="private" type="long" isStatic="true"/>
+        <Field name="firstname" visibility="private" type="StringProperty" isFinal="true"/>
+        <Field name="lastname" visibility="private" type="StringProperty" isFinal="true"/>
+        <Field name="savings" visibility="public" type="ObjectProperty&lt;Account&gt;" isFinal="true"/>
+        <Field name="checking" visibility="private" type="ObjectProperty&lt;Account&gt;" isFinal="true"/>
+        <Field name="fullNameBinding" visibility="private" type="StringBinding" isFinal="true"/>
+        <Field name="fullname" visibility="private" type="ReadOnlyStringWrapper" isFinal="true"/>
+      </Fields>
+      <Methods>
+        <Method name="fullnameProperty" visibility="public" returnType="ReadOnlyStringProperty" isFinal="true"/>
+        <Method name="getFullname" visibility="public" returnType="String" isFinal="true"/>
+        <Method name="getFirstname" visibility="public" returnType="String"/>
+        <Method name="setFirstname" visibility="public" returnType="void">
+          <Argument type="String" name="value"/>
+        </Method>
+        <Method name="firstnameProperty" visibility="public" returnType="StringProperty"/>
+        <Method name="getLastname" visibility="public" returnType="String"/>
+        <Method name="setLastname" visibility="public" returnType="void">
+          <Argument type="String" name="value"/>
+        </Method>
+        <Method name="lastnameProperty" visibility="public" returnType="StringProperty"/>
+        <Method name="getSavings" visibility="public" returnType="Account"/>
+        <Method name="setSavings" visibility="public" returnType="void">
+          <Argument type="Account" name="value"/>
+        </Method>
+        <Method name="savingsProperty" visibility="public" returnType="ObjectProperty&lt;Account&gt;"/>
+        <Method name="getChecking" visibility="public" returnType="Account"/>
+        <Method name="setChecking" visibility="public" returnType="void">
+          <Argument type="Account" name="value"/>
+        </Method>
+        <Method name="checkingProperty" visibility="public" returnType="ObjectProperty&lt;Account&gt;"/>
+        <Method name="toString" visibility="public" returnType="String"/>
+        <Method name="hashCode" visibility="public" returnType="int"/>
+        <Method name="equals" visibility="public" returnType="boolean">
+          <Argument type="Object" name="obj"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class xPosition="479.0" yPosition="184.0" package="" name="UntitledClass" visibility="public">
+      <Constructors/>
+      <Fields/>
+      <Methods/>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>

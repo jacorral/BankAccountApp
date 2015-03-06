@@ -46,7 +46,7 @@ public class Account implements Serializable {
         return this.balance.get();
     }
 
-    public void setBalance(Double value) {
+    protected void setBalance(Double value) {
         this.balance.set(value);
     }
 
