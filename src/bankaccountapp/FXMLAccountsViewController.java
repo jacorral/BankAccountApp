@@ -9,6 +9,7 @@ import com.daBandit.Bank;
 import com.daBandit.Holder;
 import java.net.URL;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
@@ -68,6 +69,7 @@ private NumberFormat currencyFormatter;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         buildBank();
+        reportTextArea.setVisible(false);
         //testPrint();
         
         TreeItem<Holder> rootNode = new TreeItem<>(
@@ -156,6 +158,8 @@ private NumberFormat currencyFormatter;
        
       // checkingBalanceTextField.textProperty().bindBidirectional(null, null);
       // System.out.println("Savings balance: " + h.getSavings().getBalance());
+       reportTextArea.setVisible(false);
+       
    }
    
    private void buildTreeView(TreeItem<Holder> root){
@@ -200,21 +204,53 @@ private NumberFormat currencyFormatter;
     @FXML
     private void summaryAction(ActionEvent event) {
         System.out.println("Pressed Summary");
-        reportTextArea.setText("Savings transactions: " + theHolder.getSavings().getAllTransactions()+
-                "\nChecking transactions:  " + theHolder.getChecking().getAllTransactions() +
-                "\nNOTE:  A negative value indicates a withdrawl");
+        
+          
+        String textSavings = ("Savings Transaction History" +
+                                "\nTransaction" + "\t\tAmount\n");
+        reportTextArea.setText(textSavings);
+        ArrayList<Double> sList = theHolder.getSavings().getAllTransactions();
+        int sc = theHolder.getSavings().getAllTransactions().size();
+        for (int i = 0; i < sc; i++){
+            System.out.println(i + "\t\t" + currencyFormatter.format(sList.get(i)));
+            String transactions = (i + "\t\t\t\t" + currencyFormatter.format(sList.get(i)) + "\n");
+            reportTextArea.appendText(transactions);
+        }
+        String savingsBalance = ("\nSavings balance = " + 
+                currencyFormatter.format(theHolder.getSavings().getBalance()));
+        reportTextArea.appendText(savingsBalance);
+       
+        
+        
+        String textChecking = ("\n\nChecking Transaction History" +
+                                "\nTransaction" + "\t\tAmount\n");
+        reportTextArea.appendText(textChecking);
+        ArrayList<Double> cList = theHolder.getChecking().getAllTransactions();
+        int cc = theHolder.getSavings().getAllTransactions().size();
+        for (int i = 0; i < cc; i++){
+            System.out.println(i + "\t\t" + currencyFormatter.format(cList.get(i)));
+            String transactions = (i + "\t\t\t\t" + currencyFormatter.format(cList.get(i)) + "\n");
+            reportTextArea.appendText(transactions);
+        }
+        String checkingBalance = ("\nChecking balance = " + 
+                currencyFormatter.format(theHolder.getChecking().getBalance()));
+        reportTextArea.appendText(checkingBalance);
+        reportTextArea.setVisible(true);
+        
+      
        
     }
 
     @FXML
     private void withdrawlAction(ActionEvent event) {
+       
         System.out.println("Pressed Withdrawl");
         theHolder.getChecking().withdrawl(500.99);
         theHolder.getSavings().withdrawl(500.11);
         System.out.println("Savings transactions: " + theHolder.getSavings().getAllTransactions());
         System.out.println("Checking transactions: " + theHolder.getChecking().getAllTransactions());
         buildView(theHolder);
-        reportTextArea.clear();
+        
     }
 
     @FXML
@@ -225,6 +261,6 @@ private NumberFormat currencyFormatter;
         System.out.println("Savings transactions: " + theHolder.getSavings().getAllTransactions());
         System.out.println("Checking transactions: " + theHolder.getChecking().getAllTransactions());
         buildView(theHolder);
-        reportTextArea.clear();
+       
     }
 }
