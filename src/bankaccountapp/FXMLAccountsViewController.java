@@ -193,21 +193,38 @@ private NumberFormat currencyFormatter;
             System.out.println("Savings balance:  " + treeItem.getValue().getSavings().getBalance() +
                    "  Transactions" + treeItem.getValue().getSavings().getAllTransactions()); 
            buildView(theHolder);
+           reportTextArea.clear();
            
            };
 
     @FXML
     private void summaryAction(ActionEvent event) {
         System.out.println("Pressed Summary");
+        reportTextArea.setText("Savings transactions: " + theHolder.getSavings().getAllTransactions()+
+                "\nChecking transactions:  " + theHolder.getChecking().getAllTransactions() +
+                "\nNOTE:  A negative value indicates a withdrawl");
+       
     }
 
     @FXML
     private void withdrawlAction(ActionEvent event) {
         System.out.println("Pressed Withdrawl");
+        theHolder.getChecking().withdrawl(500.99);
+        theHolder.getSavings().withdrawl(500.11);
+        System.out.println("Savings transactions: " + theHolder.getSavings().getAllTransactions());
+        System.out.println("Checking transactions: " + theHolder.getChecking().getAllTransactions());
+        buildView(theHolder);
+        reportTextArea.clear();
     }
 
     @FXML
     private void depostAction(ActionEvent event) {
         System.out.println("Pressed Deposit");
+        theHolder.getChecking().deposit(12345.99);
+        theHolder.getSavings().deposit(98765.11);
+        System.out.println("Savings transactions: " + theHolder.getSavings().getAllTransactions());
+        System.out.println("Checking transactions: " + theHolder.getChecking().getAllTransactions());
+        buildView(theHolder);
+        reportTextArea.clear();
     }
 }
