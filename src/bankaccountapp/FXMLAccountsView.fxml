@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="484.0" prefWidth="572.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="bankaccountapp.FXMLAccountsViewController">
+<AnchorPane id="AnchorPane" prefHeight="484.0" prefWidth="572.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bankaccountapp.FXMLAccountsViewController">
    <children>
       <GridPane layoutX="321.0" layoutY="30.0">
          <columnConstraints>
@@ -28,11 +28,11 @@
             <TextField fx:id="lastnameTextField" layoutX="394.0" layoutY="100.0" prefHeight="30.0" prefWidth="163.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <TextField fx:id="checkingBalanceTextField" layoutX="388.0" layoutY="243.0" />
-      <TextField fx:id="savingsBalanceTextField" layoutX="215.0" layoutY="243.0" />
-      <Label layoutX="105.0" layoutY="249.0" text="Balance Amount" />
-      <Label layoutX="273.0" layoutY="215.0" text="Savings" />
-      <Label layoutX="439.0" layoutY="214.0" text="Checking" />
+      <TextField fx:id="checkingBalanceTextField" layoutX="402.0" layoutY="245.0" />
+      <TextField fx:id="savingsBalanceTextField" layoutX="231.0" layoutY="245.0" />
+      <Label layoutX="130.0" layoutY="249.0" text="Balance Amount" />
+      <Label layoutX="278.0" layoutY="223.0" text="Savings" />
+      <Label layoutX="439.0" layoutY="223.0" text="Checking" />
       <TextArea fx:id="reportTextArea" layoutX="46.0" layoutY="280.0" prefHeight="167.0" prefWidth="505.0" />
       <TreeView fx:id="holderTreeView" layoutX="23.0" layoutY="23.0" prefHeight="167.0" prefWidth="174.0" />
       <HBox layoutX="260.0" layoutY="165.0" spacing="5.0">

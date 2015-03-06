@@ -8,7 +8,10 @@ package bankaccountapp;
 import com.daBandit.Bank;
 import com.daBandit.Holder;
 import java.net.URL;
+import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
@@ -35,6 +38,9 @@ public class FXMLAccountsViewController implements Initializable {
 private final Bank bank = Bank.getInstance();
 private Holder theHolder = null;
 private ObservableList<Holder> holderList = FXCollections.observableArrayList();
+
+private Currency currentCurrency;
+private NumberFormat currencyFormatter;
     
     private Label label;
     @FXML
@@ -62,7 +68,7 @@ private ObservableList<Holder> holderList = FXCollections.observableArrayList();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         buildBank();
-        testPrint();
+        //testPrint();
         
         TreeItem<Holder> rootNode = new TreeItem<>(
             new Holder("Account Holders", ""));
@@ -75,8 +81,24 @@ private ObservableList<Holder> holderList = FXCollections.observableArrayList();
     
     
     public void buildBank(){
-        bank.addHolder("Angel", "Corral");
-        bank.addHolder("Jose", "Corral");
+        Holder h1 = new Holder("Mickey", "Mouse");
+        Holder h2 = new Holder("Angel", "Corral");
+        Holder h3 = new Holder("Donald", "Duck");
+        
+        h1.getChecking().deposit(11234.56);
+        h1.getSavings().deposit(24680.99);
+        h1.getSavings().withdrawl(100.45);
+        h1.getChecking().withdrawl(3456.33);
+        
+        h2.getChecking().deposit(9876.12);
+        h2.getSavings().deposit(8945.23);
+        
+        h3.getChecking().deposit(8945.12);
+        h3.getSavings().deposit(8645.89);
+        
+        bank.addHolder(h1);
+        bank.addHolder(h2);
+        bank.addHolder(h3);
         
     }
     public void testPrint(){
@@ -84,6 +106,13 @@ private ObservableList<Holder> holderList = FXCollections.observableArrayList();
         Holder th = null;
         for (int i = 0; i < hl.size(); i++){
           th =  hl.get(i);
+          if(th.getFirstname()== "Mickey"){
+              th.getChecking().deposit(35.56);
+              th.getSavings().deposit(45.56);
+          }else if(th.getFirstname() == "Angel"){
+              th.getChecking().deposit(1456.24);
+              th.getSavings().deposit(7893.90);
+          }
           th.getChecking().deposit(100.0);
           th.getChecking().withdrawl(75.00);
           th.getSavings().deposit(100.0);
@@ -96,22 +125,37 @@ private ObservableList<Holder> holderList = FXCollections.observableArrayList();
          System.out.println("Get all trans:  " + th.getChecking().getAllTransactions());
          System.out.println("Get all trans:  " + th.getSavings().getAllTransactions());
         }
+        
+        
         buildView(th);
         
        
     }
     
    private void buildView(Holder h){
+       Locale locale = new Locale("en","US");
        StringConverter sc = new DoubleStringConverter();
+       currentCurrency = Currency.getInstance(locale);
+       currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+       
        idTextField.setText(Long.toString(h.id));
        firstnameTextField.textProperty().bindBidirectional(h.firstnameProperty());
        lastnameTextField.textProperty().bindBidirectional(h.lastnameProperty());
-       //savingsBalanceTextField.textProperty().bindBidirectional(h.getSavings().balanceProperty(), sc);
-       checkingBalanceTextField.textProperty().bindBidirectional(h.getChecking().balanceProperty(), sc);
+      /*
+       checkingBalanceTextField.textProperty().bindBidirectional
+                (new SimpleDoubleProperty(h.getChecking().getBalance()), sc);
+      
+       savingsBalanceTextField.textProperty().bindBidirectional
+               ((new SimpleDoubleProperty(h.getSavings().getBalance())), sc);*/
        
-        savingsBalanceTextField.textProperty().bindBidirectional
-               ((new SimpleDoubleProperty(h.getSavings().getBalance())), sc); 
-       System.out.println("Savings balance: " + h.getSavings().getBalance());
+       checkingBalanceTextField.textProperty().bindBidirectional
+               ((new SimpleDoubleProperty(h.getChecking().getBalance())), currencyFormatter);
+       
+       savingsBalanceTextField.textProperty().bindBidirectional
+               ((new SimpleDoubleProperty(h.getSavings().getBalance())), currencyFormatter);
+       
+      // checkingBalanceTextField.textProperty().bindBidirectional(null, null);
+      // System.out.println("Savings balance: " + h.getSavings().getBalance());
    }
    
    private void buildTreeView(TreeItem<Holder> root){
@@ -143,11 +187,11 @@ private ObservableList<Holder> holderList = FXCollections.observableArrayList();
            TreeItem<Holder> treeItem = newValue;
           // System.out.println("New tree Item" + newValue.getValue().getChecking().getAllTransactions());
           
-           theHolder =  treeItem.getValue();
-           /* System.out.println("Name:  " + treeItem.getValue().getFirstname() + " " +
+           theHolder =  new Holder(treeItem.getValue());
+            System.out.println("Name:  " + treeItem.getValue().getFirstname() + " " +
                         treeItem.getValue().getLastname());
             System.out.println("Savings balance:  " + treeItem.getValue().getSavings().getBalance() +
-                   "  Transactions" + treeItem.getValue().getSavings().getAllTransactions()); */
+                   "  Transactions" + treeItem.getValue().getSavings().getAllTransactions()); 
            buildView(theHolder);
            
            };
