@@ -21,6 +21,7 @@ import javafx.beans.property.StringProperty;
  */
 public class Holder implements Serializable {
     public final long id;
+   // public final String uid;
     private static long count = 1000;
     private final StringProperty firstname = new SimpleStringProperty(this, "firstname", "");
     private final StringProperty lastname = new SimpleStringProperty(this, "lastname", "");
@@ -35,8 +36,6 @@ public class Holder implements Serializable {
             super.bind(firstname, lastname);
         }
         
-        
-        
           @Override
             protected String computeValue() {
                 StringBuilder sb = new StringBuilder();
@@ -49,12 +48,11 @@ public class Holder implements Serializable {
                 
                 return sb.toString();
             }
-
-        
-
-     
     };       
-    
+    /*
+    Define/implement a user id by concatinating the firstname and the id
+    via a string builder using a StringBinding 
+    */
    
    
     

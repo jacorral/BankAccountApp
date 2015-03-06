@@ -9,10 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 /**
