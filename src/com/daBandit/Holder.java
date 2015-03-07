@@ -25,6 +25,7 @@ public class Holder implements Serializable {
     private static long count = 1000;
     private final StringProperty firstname = new SimpleStringProperty(this, "firstname", "");
     private final StringProperty lastname = new SimpleStringProperty(this, "lastname", "");
+    private final StringProperty userId = new SimpleStringProperty(this, "userId", "");
     
     public final ObjectProperty<Account> savings =
             new SimpleObjectProperty<>(this, "savings", new Account(Account.Type.SAVINGS));
@@ -53,6 +54,25 @@ public class Holder implements Serializable {
     Define/implement a user id by concatinating the firstname and the id
     via a string builder using a StringBinding 
     */
+    private final StringBinding UID = new StringBinding(){
+        {
+            super.bind(firstname, userId);
+        }
+        @Override
+        protected String computeValue(){
+            StringBuilder sb = new StringBuilder();
+            if (!firstname.get().isEmpty()){
+                    sb.append(firstname.get());
+                }
+                if (!lastname.get().isEmpty()){
+                    sb.append(" ").append(lastname.get());
+                }
+                
+                    
+                    
+        return sb.toString();
+        }
+    };
    
    
     

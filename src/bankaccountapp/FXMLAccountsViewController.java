@@ -21,13 +21,17 @@ import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
 
@@ -156,6 +160,8 @@ private NumberFormat currencyFormatter;
        savingsBalanceTextField.textProperty().bindBidirectional
                ((new SimpleDoubleProperty(h.getSavings().getBalance())), currencyFormatter);
        
+     
+       
       // checkingBalanceTextField.textProperty().bindBidirectional(null, null);
       // System.out.println("Savings balance: " + h.getSavings().getBalance());
        reportTextArea.setVisible(false);
@@ -242,7 +248,15 @@ private NumberFormat currencyFormatter;
     }
 
     @FXML
-    private void withdrawlAction(ActionEvent event) {
+    private void withdrawlAction(ActionEvent event) throws Exception{
+        FXMLLoader loadView = new FXMLLoader(getClass().getResource("FXMLwithdrawl.fxml"));
+         Parent root = loadView.load(getClass().getResource("FXMLwithdrawl.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setTitle("Withdrawl");
+        stage.setScene(scene);
+        stage.show();
+        
        
         System.out.println("Pressed Withdrawl");
         theHolder.getChecking().withdrawl(500.99);
