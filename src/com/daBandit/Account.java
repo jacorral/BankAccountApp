@@ -70,10 +70,9 @@ public class Account implements Serializable {
     /*  Method to deposit amount specified
         Record amount on transactions list
      */
-    public void deposit(Double amt) {
+    public void deposit(Double amt) throws InvalidAmountException, NumberFormatException{
         if (amt < 0){
-        System.out.println("Please enter a valid amount!");
-            
+            throw new InvalidAmountException("NEGATIVE AMOUNT!! Please enter a valid amount!");
         } else{
         transaction.add(amt);
         Double tmp = this.balance.get();
@@ -87,12 +86,15 @@ public class Account implements Serializable {
         Record amount on transactons list
    
      */
-    public void withdrawl(Double amt) {
+    public void withdrawl(Double amt) throws InsufficientFundsException, InvalidAmountException, NumberFormatException {
         
         Double tmp = this.balance.get();
         tmp = tmp - amt;
+        if (amt < 0){
+            throw new InvalidAmountException("NEGATIVE AMOUNT!!  Please enter a valid amount!");
+        }
         if (tmp < 0){
-            System.out.println("OUT OF FUNDS!!! "
+            throw new InsufficientFundsException("OUT OF FUNDS!!! "
                     + "Please enter a differnt amount.  Overdrawn by:  " + (-tmp));
         }else{
         this.setBalance(tmp);

@@ -30,5 +30,6 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
+      <TextArea fx:id="exceptionText" layoutX="128.0" layoutY="14.0" prefHeight="71.0" prefWidth="235.0" wrapText="true" />
    </children>
 </AnchorPane>
