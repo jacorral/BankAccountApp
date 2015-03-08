@@ -40,8 +40,8 @@ import javafx.util.converter.DoubleStringConverter;
  * @author jacorral
  */
 public class FXMLAccountsViewController implements Initializable {
-private final Bank bank = Bank.getInstance();
-private Holder theHolder = null;
+public final Bank bank = Bank.getInstance();
+protected Holder theHolder = null;
 private ObservableList<Holder> holderList = FXCollections.observableArrayList();
 
 private Currency currentCurrency;
@@ -62,6 +62,8 @@ private NumberFormat currencyFormatter;
     private TextArea reportTextArea;
     @FXML
     private TreeView<Holder> holderTreeView;
+    
+    
     @FXML
     private Button summaryButton;
     @FXML
@@ -207,6 +209,7 @@ private NumberFormat currencyFormatter;
            
            };
 
+    //@FXML
     @FXML
     private void summaryAction(ActionEvent event) {
         System.out.println("Pressed Summary");
@@ -247,28 +250,19 @@ private NumberFormat currencyFormatter;
        
     }
 
+
     @FXML
-    private void withdrawlAction(ActionEvent event) throws Exception{
-        FXMLLoader loadView = new FXMLLoader(getClass().getResource("FXMLwithdrawl.fxml"));
-         Parent root = loadView.load(getClass().getResource("FXMLwithdrawl.fxml"));
+    private void depostAction(ActionEvent event) throws Exception {
+        FXMLLoader loadView = new FXMLLoader(getClass().getResource("FXMLDeposit.fxml"));
+         Parent root = loadView.load(getClass().getResource("FXMLDeposit.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
-        stage.setTitle("Withdrawl");
+        
+        stage.setTitle("Deposit");
         stage.setScene(scene);
         stage.show();
         
-       
-        System.out.println("Pressed Withdrawl");
-        theHolder.getChecking().withdrawl(500.99);
-        theHolder.getSavings().withdrawl(500.11);
-        System.out.println("Savings transactions: " + theHolder.getSavings().getAllTransactions());
-        System.out.println("Checking transactions: " + theHolder.getChecking().getAllTransactions());
-        buildView(theHolder);
         
-    }
-
-    @FXML
-    private void depostAction(ActionEvent event) {
         System.out.println("Pressed Deposit");
         theHolder.getChecking().deposit(12345.99);
         theHolder.getSavings().deposit(98765.11);
@@ -277,4 +271,19 @@ private NumberFormat currencyFormatter;
         buildView(theHolder);
        
     }
+
+  
+    @FXML
+    private void withdrawlAction(ActionEvent event) throws Exception {
+        FXMLLoader loadView = new FXMLLoader(getClass().getResource("FXMLWithdrawl.fxml"));
+         Parent root = loadView.load(getClass().getResource("FXMLWithdrawl.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setTitle("Deposit");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+
 }
