@@ -41,7 +41,9 @@ import javafx.util.converter.DoubleStringConverter;
  */
 public class FXMLAccountsViewController implements Initializable {
 public final Bank bank = Bank.getInstance();
+
 protected Holder theHolder = null;
+static Holder newHolder;
 private ObservableList<Holder> holderList = FXCollections.observableArrayList();
 
 private Currency currentCurrency;
@@ -68,8 +70,6 @@ private NumberFormat currencyFormatter;
     private Button summaryButton;
     @FXML
     private Button withdrawlButton;
-    @FXML
-    private Button depositButton;
     
     
     @Override
@@ -85,7 +85,12 @@ private NumberFormat currencyFormatter;
         holderTreeView.getRoot().setExpanded(true);
         holderTreeView.getSelectionModel().selectedItemProperty()
                 .addListener(treeSelectionListener);
+       // Holder newHolder = new Holder(theHolder);
     }    
+    public static Holder getHolder(){
+      // Holder newHolder = new Holder(theHolder);
+        return newHolder;
+    }
     
     
     public void buildBank(){
@@ -200,6 +205,7 @@ private NumberFormat currencyFormatter;
           // System.out.println("New tree Item" + newValue.getValue().getChecking().getAllTransactions());
           
            theHolder =  new Holder(treeItem.getValue());
+           newHolder = new Holder(theHolder);
             System.out.println("Name:  " + treeItem.getValue().getFirstname() + " " +
                         treeItem.getValue().getLastname());
             System.out.println("Savings balance:  " + treeItem.getValue().getSavings().getBalance() +
@@ -251,23 +257,25 @@ private NumberFormat currencyFormatter;
     }
 
 
-    @FXML
     private void depostAction(ActionEvent event) throws Exception {
-        FXMLLoader loadView = new FXMLLoader(getClass().getResource("FXMLDeposit.fxml"));
-         Parent root = loadView.load(getClass().getResource("FXMLDeposit.fxml"));
+        FXMLLoader loadView = new FXMLLoader(getClass().getResource("FXMLWithdrawl.fxml"));
+        Parent root = loadView.load(getClass().getResource("FXMLWithdrawl.fxml"));
+        
         Stage stage = new Stage();
         Scene scene = new Scene(root);
+        root.setUserData(theHolder);
         
-        stage.setTitle("Deposit");
+        stage.setTitle("Withdrawal/Deposit");
         stage.setScene(scene);
         stage.show();
         
-        
+        /*
         System.out.println("Pressed Deposit");
         theHolder.getChecking().deposit(12345.99);
         theHolder.getSavings().deposit(98765.11);
         System.out.println("Savings transactions: " + theHolder.getSavings().getAllTransactions());
         System.out.println("Checking transactions: " + theHolder.getChecking().getAllTransactions());
+        */
         buildView(theHolder);
        
     }
@@ -276,12 +284,13 @@ private NumberFormat currencyFormatter;
     @FXML
     private void withdrawlAction(ActionEvent event) throws Exception {
         FXMLLoader loadView = new FXMLLoader(getClass().getResource("FXMLWithdrawl.fxml"));
-         Parent root = loadView.load(getClass().getResource("FXMLWithdrawl.fxml"));
+        Parent root = loadView.load(getClass().getResource("FXMLWithdrawl.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
-        stage.setTitle("Deposit");
+        stage.setTitle("Deposit/Withdrawal");
         stage.setScene(scene);
         stage.show();
+         buildView(theHolder);
     }
 
 
