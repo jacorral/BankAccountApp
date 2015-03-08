@@ -7,6 +7,9 @@ package bankaccountapp;
 
 import com.daBandit.Bank;
 import com.daBandit.Holder;
+import com.daBandit.InsufficientFundsException;
+import com.daBandit.InvalidAmountException;
+import java.io.IOException;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -14,6 +17,8 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -73,8 +78,14 @@ private NumberFormat currencyFormatter;
     
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb){
+    try {
         buildBank();
+    } catch (InvalidAmountException ex) {
+        Logger.getLogger(FXMLAccountsViewController.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (InsufficientFundsException ex) {
+        Logger.getLogger(FXMLAccountsViewController.class.getName()).log(Level.SEVERE, null, ex);
+    }
         reportTextArea.setVisible(false);
         //testPrint();
         
@@ -93,7 +104,7 @@ private NumberFormat currencyFormatter;
     }
     
     
-    public void buildBank(){
+    public void buildBank()throws InvalidAmountException, InsufficientFundsException{
         Holder h1 = new Holder("Mickey", "Mouse");
         Holder h2 = new Holder("Angel", "Corral");
         Holder h3 = new Holder("Donald", "Duck");
@@ -114,7 +125,8 @@ private NumberFormat currencyFormatter;
         bank.addHolder(h3);
         
     }
-    public void testPrint(){
+    
+    public void testPrint() throws InvalidAmountException, InsufficientFundsException{
         List<Holder> hl = bank.getAllHolders();
         Holder th = null;
         for (int i = 0; i < hl.size(); i++){
@@ -144,6 +156,7 @@ private NumberFormat currencyFormatter;
         
        
     }
+    
     
    private void buildView(Holder h){
        Locale locale = new Locale("en","US");
@@ -217,7 +230,7 @@ private NumberFormat currencyFormatter;
 
     //@FXML
     @FXML
-    private void summaryAction(ActionEvent event) {
+    private void summaryAction(ActionEvent event) throws IOException {
         System.out.println("Pressed Summary");
         
           
@@ -252,37 +265,17 @@ private NumberFormat currencyFormatter;
         reportTextArea.appendText(checkingBalance);
         reportTextArea.setVisible(true);
         
-      
+        
        
     }
 
 
-    private void depostAction(ActionEvent event) throws Exception {
-        FXMLLoader loadView = new FXMLLoader(getClass().getResource("FXMLWithdrawl.fxml"));
-        Parent root = loadView.load(getClass().getResource("FXMLWithdrawl.fxml"));
-        
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        root.setUserData(theHolder);
-        
-        stage.setTitle("Withdrawal/Deposit");
-        stage.setScene(scene);
-        stage.show();
-        
-        /*
-        System.out.println("Pressed Deposit");
-        theHolder.getChecking().deposit(12345.99);
-        theHolder.getSavings().deposit(98765.11);
-        System.out.println("Savings transactions: " + theHolder.getSavings().getAllTransactions());
-        System.out.println("Checking transactions: " + theHolder.getChecking().getAllTransactions());
-        */
-        buildView(theHolder);
-       
-    }
+   
+
 
   
     @FXML
-    private void withdrawlAction(ActionEvent event) throws Exception {
+     private void withdrawlAction(ActionEvent event) throws IOException {
         FXMLLoader loadView = new FXMLLoader(getClass().getResource("FXMLWithdrawl.fxml"));
         Parent root = loadView.load(getClass().getResource("FXMLWithdrawl.fxml"));
         Stage stage = new Stage();
@@ -296,3 +289,5 @@ private NumberFormat currencyFormatter;
 
 
 }
+
+   
