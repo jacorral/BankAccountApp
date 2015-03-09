@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="Reverse engineered bankaccountapp 2015.03.09 13-16-41-521">
+  <ClassDiagramComponents>
+    <Class xPosition="20.0" yPosition="20.0" package="bankaccountapp" name="BankAccountApp" visibility="public">
+      <Constructors/>
+      <Fields/>
+      <Methods>
+        <Method name="start" visibility="public" returnType="void">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+        <Method name="main" visibility="public" returnType="void" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class xPosition="320.0" yPosition="20.0" package="bankaccountapp" name="FXMLWithdrawlController" visibility="public">
+      <Constructors/>
+      <Fields>
+        <Field name="newHolder" visibility="private" type="Holder"/>
+        <Field name="withdrawlSavings" visibility="private" type="TextField"/>
+        <Field name="withdrawlChecking" visibility="private" type="TextField"/>
+        <Field name="deposit" visibility="private" type="Button"/>
+        <Field name="withdrawal" visibility="private" type="Button"/>
+        <Field name="exceptionText" visibility="private" type="TextArea"/>
+        <Field name="nfe" visibility="private" type="NumberFormatException"/>
+        <Field name="e" visibility="private" type="Exception"/>
+      </Fields>
+      <Methods>
+        <Method name="initialize" visibility="public" returnType="void">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="processDeposit" visibility="private" returnType="void">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="processWithdrawal" visibility="private" returnType="void">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>

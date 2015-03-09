@@ -32,6 +32,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
@@ -77,6 +78,8 @@ public class FXMLAccountsViewController implements Initializable {
     private Button withdrawlButton;
     @FXML
     private Button updateHolder;
+    @FXML
+    private MenuButton menu;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -124,6 +127,7 @@ public class FXMLAccountsViewController implements Initializable {
         bank.addHolder(h1);
         bank.addHolder(h2);
         bank.addHolder(h3);
+        bank.addHolder(new Holder("Minnie", "Mouse"));
 
     }
 
@@ -263,6 +267,10 @@ public class FXMLAccountsViewController implements Initializable {
     @FXML
     private void updateHolder(ActionEvent event) {
         bank.updateHolder(theHolder);
+    }
+
+    @FXML
+    private void menuButton(ActionEvent event) {
     }
 
 }

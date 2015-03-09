@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="Reverse engineered BankAccountApp 2015.03.09 13-14-28-007">
+  <ClassDiagramComponents>
+    <Class xPosition="20.0" yPosition="20.0" package="bankaccountapp" name="BankAccountApp" visibility="public">
+      <Constructors/>
+      <Fields/>
+      <Methods>
+        <Method name="start" visibility="public" returnType="void">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+        <Method name="main" visibility="public" returnType="void" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class xPosition="320.0" yPosition="20.0" package="bankaccountapp" name="FXMLWithdrawlController" visibility="public">
+      <Constructors/>
+      <Fields>
+        <Field name="newHolder" visibility="private" type="Holder"/>
+        <Field name="withdrawlSavings" visibility="private" type="TextField"/>
+        <Field name="withdrawlChecking" visibility="private" type="TextField"/>
+        <Field name="deposit" visibility="private" type="Button"/>
+        <Field name="withdrawal" visibility="private" type="Button"/>
+        <Field name="exceptionText" visibility="private" type="TextArea"/>
+        <Field name="nfe" visibility="private" type="NumberFormatException"/>
+        <Field name="e" visibility="private" type="Exception"/>
+      </Fields>
+      <Methods>
+        <Method name="initialize" visibility="public" returnType="void">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="processDeposit" visibility="private" returnType="void">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="processWithdrawal" visibility="private" returnType="void">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class xPosition="620.0" yPosition="20.0" package="com.daBandit" name="Holder" visibility="public">
+      <Constructors>
+        <Constructor name="Holder" visibility="public">
+          <Argument type="Holder" name="holder"/>
+        </Constructor>
+        <Constructor name="Holder" visibility="public">
+          <Argument type="String" name="fn"/>
+          <Argument type="String" name="ln"/>
+        </Constructor>
+      </Constructors>
+      <Fields>
+        <Field name="id" visibility="public" type="long" isFinal="true"/>
+        <Field name="count" visibility="private" type="long" isStatic="true"/>
+        <Field name="firstname" visibility="private" type="StringProperty" isFinal="true"/>
+        <Field name="lastname" visibility="private" type="StringProperty" isFinal="true"/>
+        <Field name="userId" visibility="private" type="StringProperty" isFinal="true"/>
+        <Field name="savings" visibility="public" type="ObjectProperty&lt;Account&gt;" isFinal="true"/>
+        <Field name="checking" visibility="private" type="ObjectProperty&lt;Account&gt;" isFinal="true"/>
+        <Field name="fullNameBinding" visibility="private" type="StringBinding" isFinal="true"/>
+        <Field name="UID" visibility="private" type="StringBinding" isFinal="true"/>
+        <Field name="fullname" visibility="private" type="ReadOnlyStringWrapper" isFinal="true"/>
+      </Fields>
+      <Methods>
+        <Method name="fullnameProperty" visibility="public" returnType="ReadOnlyStringProperty" isFinal="true"/>
+        <Method name="getFullname" visibility="public" returnType="String" isFinal="true"/>
+        <Method name="getFirstname" visibility="public" returnType="String"/>
+        <Method name="setFirstname" visibility="public" returnType="void">
+          <Argument type="String" name="value"/>
+        </Method>
+        <Method name="firstnameProperty" visibility="public" returnType="StringProperty"/>
+        <Method name="getLastname" visibility="public" returnType="String"/>
+        <Method name="setLastname" visibility="public" returnType="void">
+          <Argument type="String" name="value"/>
+        </Method>
+        <Method name="lastnameProperty" visibility="public" returnType="StringProperty"/>
+        <Method name="getSavings" visibility="public" returnType="Account"/>
+        <Method name="setSavings" visibility="public" returnType="void">
+          <Argument type="Account" name="value"/>
+        </Method>
+        <Method name="savingsProperty" visibility="public" returnType="ObjectProperty&lt;Account&gt;"/>
+        <Method name="getChecking" visibility="public" returnType="Account"/>
+        <Method name="setChecking" visibility="public" returnType="void">
+          <Argument type="Account" name="value"/>
+        </Method>
+        <Method name="checkingProperty" visibility="public" returnType="ObjectProperty&lt;Account&gt;"/>
+        <Method name="toString" visibility="public" returnType="String"/>
+        <Method name="hashCode" visibility="public" returnType="int"/>
+        <Method name="equals" visibility="public" returnType="boolean">
+          <Argument type="Object" name="obj"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class xPosition="20.0" yPosition="420.0" package="com.daBandit" name="InsufficientFundsException" visibility="public">
+      <Constructors>
+        <Constructor name="InsufficientFundsException" visibility="public"/>
+        <Constructor name="InsufficientFundsException" visibility="public">
+          <Argument type="String" name="msg"/>
+        </Constructor>
+      </Constructors>
+      <Fields/>
+      <Methods/>
+    </Class>
+    <Class xPosition="320.0" yPosition="420.0" package="com.daBandit" name="InvalidAmountException" visibility="public">
+      <Constructors>
+        <Constructor name="InvalidAmountException" visibility="public"/>
+        <Constructor name="InvalidAmountException" visibility="public">
+          <Argument type="String" name="msg"/>
+        </Constructor>
+      </Constructors>
+      <Fields/>
+      <Methods/>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="newHolder" source="FXMLWithdrawlController" target="Holder" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

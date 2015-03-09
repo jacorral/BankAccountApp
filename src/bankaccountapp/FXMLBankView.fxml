@@ -33,7 +33,7 @@
       <Label layoutX="278.0" layoutY="223.0" text="Savings" />
       <Label layoutX="439.0" layoutY="223.0" text="Checking" />
       <TextArea fx:id="reportTextArea" layoutX="46.0" layoutY="280.0" prefHeight="167.0" prefWidth="505.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="280.0" />
-      <TreeView fx:id="holderTreeView" layoutX="23.0" layoutY="23.0" prefHeight="167.0" prefWidth="174.0" />
+      <TreeView fx:id="holderTreeView" layoutX="29.0" layoutY="51.0" prefHeight="167.0" prefWidth="174.0" />
       <HBox layoutX="260.0" layoutY="165.0" spacing="5.0">
          <children>
             <Button fx:id="summaryButton" layoutX="307.0" layoutY="167.0" mnemonicParsing="false" onAction="#summaryAction" text="Summary" />
@@ -41,5 +41,11 @@
          </children>
       </HBox>
       <Button fx:id="updateHolder" layoutX="406.0" layoutY="122.0" mnemonicParsing="false" onAction="#updateHolder" text="Update Holder" />
+      <MenuButton fx:id="menu" layoutX="29.0" layoutY="18.0" mnemonicParsing="false" onAction="#menuButton" text="File">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </MenuButton>
    </children>
 </AnchorPane>
