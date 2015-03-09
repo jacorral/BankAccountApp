@@ -5,6 +5,7 @@
  */
 package com.daBandit;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -16,7 +17,7 @@ import javafx.collections.ObservableMap;
  *
  * @author jacorral
  */
-public class Bank {
+public class Bank implements Serializable{
     private final ObservableList<Holder> observableList = 
             FXCollections.observableArrayList();
     
