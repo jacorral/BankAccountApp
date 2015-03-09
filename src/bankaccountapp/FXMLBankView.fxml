@@ -40,5 +40,6 @@
             <Button fx:id="withdrawlButton" layoutX="394.0" layoutY="167.0" mnemonicParsing="false" onAction="#withdrawlAction" text="WIthdrawal/Deposit" />
          </children>
       </HBox>
+      <Button fx:id="updateHolder" layoutX="406.0" layoutY="122.0" mnemonicParsing="false" onAction="#updateHolder" text="Update Holder" />
    </children>
 </AnchorPane>

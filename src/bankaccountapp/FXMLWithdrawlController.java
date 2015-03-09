@@ -13,9 +13,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 
 /**
@@ -35,6 +35,8 @@ public class FXMLWithdrawlController implements Initializable {
     private Button withdrawal;
     @FXML
     private TextArea exceptionText;
+    private NumberFormatException nfe;
+    private Exception e;
 
     /**
      * Initializes the controller class.
@@ -57,25 +59,8 @@ public class FXMLWithdrawlController implements Initializable {
         String amtChecking = withdrawlChecking.getText();
         System.out.println("Checking amount: " + amtChecking);
         System.out.println("Holder checking balance: " + newHolder.getChecking().getBalance());
-        //Double amtCheck = Double.parseDouble(amtChecking);
-        try{
-         Double amtCheck = Double.parseDouble(amtChecking);
-         newHolder.getChecking().deposit(amtCheck);
        
-        }catch (InvalidAmountException  e){
-            exceptionText.clear();
-             exceptionText.setVisible(true);
-            exceptionText.setText(e.getMessage());
-        } catch (NumberFormatException nfe){
-            exceptionText.clear();
-             exceptionText.setVisible(true);
-             exceptionText.setText("NOT A NUMBER!!\n" + "Please enter a valid amount!!\n"+
-                     "For Checking account\n");
-            exceptionText.appendText(nfe.getMessage());
-        }
-        System.out.println("Checking amount: " + amtChecking);
-        System.out.println("Holder checking balance: " + newHolder.getChecking().getBalance());
-        
+       
         //Process Savings Deposit
         
         String amtSavings = withdrawlSavings.getText();
@@ -83,8 +68,11 @@ public class FXMLWithdrawlController implements Initializable {
         
         
         try{
+            Double amtCheck = Double.parseDouble(amtChecking);
+            newHolder.getChecking().deposit(amtCheck);
             Double amtSav = Double.parseDouble(amtSavings);
             newHolder.getSavings().deposit(amtSav);
+            ((Node)(event.getSource())).getScene().getWindow().hide();
          }catch (InvalidAmountException e){
              exceptionText.clear();
              exceptionText.setVisible(true);
@@ -93,11 +81,13 @@ public class FXMLWithdrawlController implements Initializable {
             exceptionText.clear();
              exceptionText.setVisible(true);
              exceptionText.setText("NOT A NUMBER!!\n" + "Please enter a valid amount!!\n" +
-                     "For Savings account!\n");
+                     "For Savings/Checking account!\n");
             exceptionText.appendText(nfe.getMessage());
             
         }
        
+      // ((Node)(event.getSource())).getScene().getWindow().hide();
+      
     }
 
     @FXML
@@ -106,29 +96,18 @@ public class FXMLWithdrawlController implements Initializable {
         //Process Checking Withdrawal
        
        
-        try {
-            String amtChecking = withdrawlChecking.getText();
-            Double amtCheck = Double.parseDouble(amtChecking);
-            newHolder.getChecking().withdrawl(amtCheck);
-        }catch (InsufficientFundsException | InvalidAmountException iae){
-            exceptionText.clear();
-            exceptionText.setVisible(true);
-            exceptionText.setText(iae.getMessage());
-        }catch (NumberFormatException nfe){
-            exceptionText.clear();
-            exceptionText.setVisible(true);
-            exceptionText.setText("NOT A NUMBER!!\n" + "Please enter a valid amount!!\n" +
-                    "For Checking account!\n");
-            exceptionText.appendText(nfe.getMessage());
- 
-        }
+        
         //Process Savings Withdrawal
           
           
           try{
-                String amtSavings = withdrawlSavings.getText();
-                Double amt = Double.parseDouble(amtSavings);
-                newHolder.getSavings().withdrawl(amt);
+            String amtChecking = withdrawlChecking.getText();
+            Double amtCheck = Double.parseDouble(amtChecking);
+            newHolder.getChecking().withdrawl(amtCheck);
+            String amtSavings = withdrawlSavings.getText();
+            Double amt = Double.parseDouble(amtSavings);
+            newHolder.getSavings().withdrawl(amt);
+            ((Node)(event.getSource())).getScene().getWindow().hide();
           }catch (InsufficientFundsException | InvalidAmountException iae){
                 exceptionText.clear();
                 exceptionText.setVisible(true);
