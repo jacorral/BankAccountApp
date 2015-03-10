@@ -23,16 +23,16 @@ public class Holder implements Serializable {
     public final long id;
    // public final String uid;
     private static long count = 1000;
-    private final StringProperty firstname = new SimpleStringProperty(this, "firstname", "");
-    private final StringProperty lastname = new SimpleStringProperty(this, "lastname", "");
-    private final StringProperty userId = new SimpleStringProperty(this, "userId", "");
+    private transient final StringProperty firstname = new SimpleStringProperty(this, "firstname", "");
+    private transient final StringProperty lastname = new SimpleStringProperty(this, "lastname", "");
+    private transient final StringProperty userId = new SimpleStringProperty(this, "userId", "");
     
-    public final ObjectProperty<Account> savings =
+    public transient final ObjectProperty<Account> savings =
             new SimpleObjectProperty<>(this, "savings", new Account(Account.Type.SAVINGS));
-    private final ObjectProperty<Account> checking =
+    private transient final ObjectProperty<Account> checking =
             new SimpleObjectProperty<>(this, "checking", new Account(Account.Type.CHECKING));
     
-    private final StringBinding fullNameBinding = new StringBinding() {
+    private transient final StringBinding fullNameBinding = new StringBinding() {
         {
             super.bind(firstname, lastname);
         }
@@ -54,7 +54,7 @@ public class Holder implements Serializable {
     Define/implement a user id by concatinating the firstname and the id
     via a string builder using a StringBinding 
     */
-    private final StringBinding UID = new StringBinding(){
+    private transient final StringBinding UID = new StringBinding(){
         {
             super.bind(firstname, userId);
         }
@@ -93,10 +93,10 @@ public class Holder implements Serializable {
         count++;
     }
     
-     private final ReadOnlyStringWrapper fullname =
+     private transient final ReadOnlyStringWrapper fullname =
            new ReadOnlyStringWrapper(this, "fullname");
      
-     public final ReadOnlyStringProperty fullnameProperty(){
+     public  final ReadOnlyStringProperty fullnameProperty(){
          return fullname.getReadOnlyProperty();
      }
      

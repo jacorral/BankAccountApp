@@ -23,8 +23,8 @@ public class Account implements Serializable {
 
         CHECKING, SAVINGS
     }
-    private final DoubleProperty balance = new SimpleDoubleProperty(this, "balance");
-    private final ObjectProperty<Type> type = new SimpleObjectProperty<>(this, "type");
+    private transient final DoubleProperty balance = new SimpleDoubleProperty(this, "balance");
+    private transient final ObjectProperty<Type> type = new SimpleObjectProperty<>(this, "type");
    // private final ListProperty<Double> transactions = new SimpleListProperty<>(this,"transactions");
 
     protected Account() {

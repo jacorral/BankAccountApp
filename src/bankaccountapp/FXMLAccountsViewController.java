@@ -11,7 +11,11 @@ import com.daBandit.HolderListWrapper;
 import com.daBandit.InsufficientFundsException;
 import com.daBandit.InvalidAmountException;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -95,6 +99,7 @@ public class FXMLAccountsViewController implements Initializable {
         }
         reportTextArea.setVisible(false);
         //testPrint();
+        
 
         TreeItem<Holder> rootNode = new TreeItem<>(
                 new Holder("Account Holders", ""));
@@ -132,6 +137,8 @@ public class FXMLAccountsViewController implements Initializable {
         bank.addHolder(h2);
         bank.addHolder(h3);
         bank.addHolder(new Holder("Minnie", "Mouse"));
+        
+        
 
     }
 
@@ -254,6 +261,84 @@ public class FXMLAccountsViewController implements Initializable {
         reportTextArea.setVisible(true);
        
     }
+    
+      public void save() {
+        ArrayList<Holder> list = new ArrayList(bank.getAllHolders());
+
+        File file = new File("bank.dat");
+
+        try (FileOutputStream fop = new FileOutputStream(file)) {
+            //create file if it doesn't exist
+            if (!file.exists()) {
+                file.createNewFile();
+            } else {
+                // Code for saving data
+
+                ObjectOutputStream oos = new ObjectOutputStream(fop);
+                
+                oos.writeInt(list.size());
+                
+                for (int i = 0; i < list.size(); i++){
+                    System.out.println("Employee being serialized: " + list.get(i).getFirstname());
+                    oos.writeObject(list.get(i));
+                }
+               
+                
+
+                oos.close();
+                fop.close();
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void read() {
+       ArrayList<Holder> inList = new ArrayList<>();
+         Bank bank = Bank.getInstance();
+         
+
+        try {
+            FileInputStream inputFileStream = new FileInputStream("bank.dat");
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputFileStream);
+            //System.out.println("Deserial data: " + objectInputStream.readObject().getClass());
+            int listSize = objectInputStream.readInt();
+            System.out.println("Number of objects in list: " + listSize);
+            
+            for (int i=0; i < listSize; i++){
+                //.addEmployee((Employee)objectInputStream.readObject());
+             //  System.out.println( objectInputStream.readObject().getClass());
+               inList.add((Holder)objectInputStream.readObject());
+               
+               // bank.addHolder(newHolder);
+                //em.addEmployee((Employee) objectInputStream.readObject());
+               
+            }
+            System.out.println("bank size = " + bank.getAllHolders().size());
+            /*System.out.println("Employee being de=serialized: " + desEmp.getFirstname());
+           
+            for (int i = 0; i < inList.size(); i++){
+                //em.addEmployee(inList.get(i));
+               // System.out.println(inList.get(i).getFirstname());
+                System.out.println("index #: " + i + " "+ (inList.get(i) instanceof Employee));
+            }*/
+            //em.addEmployee(inList.get(3));
+            newHolder = new Holder (inList.get(0));
+            System.out.println(inList.get(0).getFirstname());
+            objectInputStream.close();
+            inputFileStream.close();
+
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    
+    }
+    
 
     //Load Withdrawal/Deposit window
     @FXML
@@ -271,6 +356,12 @@ public class FXMLAccountsViewController implements Initializable {
     @FXML
     private void updateHolder(ActionEvent event) {
         bank.updateHolder(theHolder);
+        //save();
+        //read();
+    }
+
+    @FXML
+    private void menuButton(ActionEvent event) {
     }
 
 }
