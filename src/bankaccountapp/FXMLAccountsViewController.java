@@ -7,8 +7,10 @@ package bankaccountapp;
 
 import com.daBandit.Bank;
 import com.daBandit.Holder;
+import com.daBandit.HolderListWrapper;
 import com.daBandit.InsufficientFundsException;
 import com.daBandit.InvalidAmountException;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.NumberFormat;
@@ -40,6 +42,9 @@ import javafx.scene.control.TreeView;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 /**
  *
@@ -102,6 +107,7 @@ public class FXMLAccountsViewController implements Initializable {
                 .addListener(treeSelectionListener);
         // Holder newHolder = new Holder(theHolder);
     }
+    
 
     public static Holder getHolder() {
         // Holder newHolder = new Holder(theHolder);
@@ -248,7 +254,7 @@ public class FXMLAccountsViewController implements Initializable {
                 + currencyFormatter.format(theHolder.getChecking().getBalance()));
         reportTextArea.appendText(checkingBalance);
         reportTextArea.setVisible(true);
-
+        buildView(theHolder);
     }
 
     //Load Withdrawal/Deposit window
@@ -271,6 +277,51 @@ public class FXMLAccountsViewController implements Initializable {
 
     @FXML
     private void menuButton(ActionEvent event) {
+    }
+    
+    public void loadHolderDataFromFile(File file){
+     try{
+         JAXBContext context = JAXBContext.newInstance(HolderListWrapper.class);
+         Unmarshaller um = context.createUnmarshaller();
+         
+         //Reading XML from the file and unmarshalling
+         HolderListWrapper wrapper = (HolderListWrapper) um.unmarshal(file);
+         int count = wrapper.getHolders().size();
+         List<Holder> holderList;
+         holderList = new ArrayList<>();
+         holderList = wrapper.getHolders();
+         for (int i = 0; i < count; i++ ){
+             bank.addHolder(holderList.get(i));
+         }
+         
+         //bank.addHolder(wrapper.getHolders());
+         
+         setHolderFilePath(file);
+     }   catch (Exception e){
+         System.out.println("Exception " + e.getMessage());
+         /*Dialogs.create()
+                 .title("Error")
+                 .masthead("Could not load data from file:\n" + file.getPath());
+                 */
+     }
+    }
+    
+    public void saveHolderDataToFile(File file){
+        try{
+            JAXBContext context = JAXBContext.newInstance(HolderListWrapper.class);
+            Marshaller m = context.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            //wrapping Holder data
+            HolderListWrapper wrapper = new HolderListWrapper();
+            wrapper.setHolders(bank.getAllHolders());
+            //Marshalling and saving XML to the file
+            m.marshal(wrapper, file);
+            //Save the file path to the registry
+            setHolderFilePath(file);
+        }catch(Exception e){
+            System.out.println("Exception " + e.getMessage());
+            //Dialogs.create().title("Error")
+        }
     }
 
 }

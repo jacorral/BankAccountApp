@@ -72,6 +72,7 @@ public class FXMLWithdrawlController implements Initializable {
             newHolder.getChecking().deposit(amtCheck);
             Double amtSav = Double.parseDouble(amtSavings);
             newHolder.getSavings().deposit(amtSav);
+            
             ((Node)(event.getSource())).getScene().getWindow().hide();
          }catch (InvalidAmountException e){
              exceptionText.clear();
