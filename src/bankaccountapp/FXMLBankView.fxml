@@ -41,11 +41,5 @@
          </children>
       </HBox>
       <Button fx:id="updateHolder" layoutX="406.0" layoutY="122.0" mnemonicParsing="false" onAction="#updateHolder" text="Update Holder" />
-      <MenuButton fx:id="menu" layoutX="29.0" layoutY="18.0" mnemonicParsing="false" onAction="#menuButton" text="File">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
-        </items>
-      </MenuButton>
    </children>
 </AnchorPane>
