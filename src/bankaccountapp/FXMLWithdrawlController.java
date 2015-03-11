@@ -37,6 +37,8 @@ public class FXMLWithdrawlController implements Initializable {
     private TextArea exceptionText;
     private NumberFormatException nfe;
     private Exception e;
+    
+
 
     /**
      * Initializes the controller class.
@@ -48,7 +50,8 @@ public class FXMLWithdrawlController implements Initializable {
         //Holder newHolder = new Holder(Node.getUserData());
       System.out.println("Holder checking: " + newHolder.getChecking().getBalance());
       System.out.println("Holder savings: " + newHolder.getSavings().getBalance());
-    }    
+      
+    } 
 
     
 
@@ -57,10 +60,7 @@ public class FXMLWithdrawlController implements Initializable {
         Holder newHolder = new Holder(FXMLAccountsViewController.getHolder());
         // Process Checking Deposit
         String amtChecking = withdrawlChecking.getText();
-        System.out.println("Checking amount: " + amtChecking);
-        System.out.println("Holder checking balance: " + newHolder.getChecking().getBalance());
-       
-       
+        
         //Process Savings Deposit
         
         String amtSavings = withdrawlSavings.getText();
@@ -72,7 +72,6 @@ public class FXMLWithdrawlController implements Initializable {
             newHolder.getChecking().deposit(amtCheck);
             Double amtSav = Double.parseDouble(amtSavings);
             newHolder.getSavings().deposit(amtSav);
-            
             ((Node)(event.getSource())).getScene().getWindow().hide();
          }catch (InvalidAmountException e){
              exceptionText.clear();

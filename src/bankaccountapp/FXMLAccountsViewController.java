@@ -25,6 +25,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -38,11 +39,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
@@ -57,6 +58,7 @@ import javax.xml.bind.Unmarshaller;
 public class FXMLAccountsViewController implements Initializable {
 
     public final Bank bank = Bank.getInstance();
+    private BankAccountApp mainApp;
 
     protected Holder theHolder = null;
     static Holder newHolder;
@@ -110,13 +112,17 @@ public class FXMLAccountsViewController implements Initializable {
                 .addListener(treeSelectionListener);
         // Holder newHolder = new Holder(theHolder);
     }
-    
+
+    public void setMainApp(BankAccountApp mainApp) {
+        this.mainApp = mainApp;
+    }
 
     public static Holder getHolder() {
         // Holder newHolder = new Holder(theHolder);
         return newHolder;
     }
 //  Test/Working data
+
     public void buildBank() throws InvalidAmountException, InsufficientFundsException {
         Holder h1 = new Holder("Mickey", "Mouse");
         Holder h2 = new Holder("Angel", "Corral");
@@ -172,7 +178,7 @@ public class FXMLAccountsViewController implements Initializable {
     }
 
     //Method to build the main view
-    private void buildView(Holder h) {
+    public void buildView(Holder h) {
         Locale locale = new Locale("en", "US");
         StringConverter sc = new DoubleStringConverter();
         currentCurrency = Currency.getInstance(locale);
@@ -181,10 +187,8 @@ public class FXMLAccountsViewController implements Initializable {
         idTextField.setText(Long.toString(h.id));
         firstnameTextField.textProperty().bindBidirectional(h.firstnameProperty());
         lastnameTextField.textProperty().bindBidirectional(h.lastnameProperty());
-        checkingBalanceTextField.textProperty().bindBidirectional
-            ((new SimpleDoubleProperty(h.getChecking().getBalance())), currencyFormatter);
-        savingsBalanceTextField.textProperty().bindBidirectional
-            ((new SimpleDoubleProperty(h.getSavings().getBalance())), currencyFormatter);
+        checkingBalanceTextField.textProperty().bindBidirectional((new SimpleDoubleProperty(h.getChecking().getBalance())), currencyFormatter);
+        savingsBalanceTextField.textProperty().bindBidirectional((new SimpleDoubleProperty(h.getSavings().getBalance())), currencyFormatter);
         reportTextArea.setVisible(false);
 
     }
@@ -220,7 +224,7 @@ public class FXMLAccountsViewController implements Initializable {
                 System.out.println("Name:  " + treeItem.getValue().getFirstname() + " "
                         + treeItem.getValue().getLastname());
                 System.out.println("Savings balance:  " + treeItem.getValue().getSavings().getBalance()
-                        + "  Transactions" + treeItem.getValue().getSavings().getAllTransactions());
+                        + "\nChecking balance: " + treeItem.getValue().getChecking().getBalance() + "\n");
                 buildView(theHolder);
                 reportTextArea.clear();
 
@@ -259,7 +263,7 @@ public class FXMLAccountsViewController implements Initializable {
                 + currencyFormatter.format(theHolder.getChecking().getBalance()));
         reportTextArea.appendText(checkingBalance);
         reportTextArea.setVisible(true);
-       
+
     }
     
       public void save() {
@@ -350,6 +354,7 @@ public class FXMLAccountsViewController implements Initializable {
         stage.setTitle("Deposit/Withdrawal");
         stage.setScene(scene);
         stage.show();
+        
         buildView(theHolder);
     }
 
@@ -362,6 +367,163 @@ public class FXMLAccountsViewController implements Initializable {
 
     @FXML
     private void menuButton(ActionEvent event) {
+    }
+
+    public void loadHolderDataFromFile(File file) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(HolderListWrapper.class);
+            Unmarshaller um = context.createUnmarshaller();
+
+            //Reading XML from the file and unmarshalling
+            HolderListWrapper wrapper = (HolderListWrapper) um.unmarshal(file);
+            int count = wrapper.getHolders().size();
+            List<Holder> holderList = new ArrayList<>(wrapper.getHolders());
+            
+            for (int i = 0; i < count; i++) {
+                bank.addHolder(holderList.get(i));
+            }
+
+         //bank.addHolder(wrapper.getHolders());
+            setHolderFilePath(file);
+
+        } catch (Exception e) {
+            System.out.println("Exception " + e.getMessage());
+            /*Dialogs.create()
+             .title("Error")
+             .masthead("Could not load data from file:\n" + file.getPath());
+             */
+        }
+    }
+
+    public void saveHolderDataToFile(File file) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(HolderListWrapper.class);
+            Marshaller m = context.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            //wrapping Holder data
+            HolderListWrapper wrapper = new HolderListWrapper();
+            wrapper.setHolders(bank.getAllHolders());
+            //Marshalling and saving XML to the file
+            m.marshal(wrapper, file);
+            //Save the file path to the registry
+
+            setHolderFilePath(file);
+        } catch (Exception e) {
+            System.out.println("Exception " + e.getMessage());
+            //Dialogs.create().title("Error")
+        }
+    }
+
+    /**
+     * Returns the person file preference, i.e. the file that was last opened.
+     * The preference is read from the OS specific registry. If no such
+     * preference can be found, null is returned.
+     *
+     * @return
+     */
+    public File getHolderFilePath() {
+        Preferences prefs = Preferences.userNodeForPackage(BankAccountApp.class);
+        String filePath = prefs.get("filePath", null);
+        if (filePath != null) {
+            return new File(filePath);
+        } else {
+            return null;
+        }
+
+    }
+
+    /**
+     * Sets the file path of the currently loaded file. The path is persisted in
+     * the OS specific registry.
+     *
+     * @param file the file or null to remove the path
+     */
+    public void setHolderFilePath(File file) {
+        Preferences prefs = Preferences.userNodeForPackage(BankAccountApp.class);
+        if (file != null) {
+            prefs.put("filePath", file.getPath());
+
+            //Update the stage title
+            mainApp.stage.setTitle("BankAccount App - " + file.getName());
+        } else {
+            prefs.remove("filePath");
+
+            //update the stage title
+            mainApp.stage.setTitle("BankAccountApp");
+        }
+
+    }
+    
+     @FXML
+    private void handleNew() {
+        //getHolderData().clear();
+        setHolderFilePath(null);
+    }
+
+    /**
+     * Opens a FileChooser to let the user select an address book to load.
+     */
+    @FXML
+    private void handleOpen() {
+        FileChooser fileChooser = new FileChooser();
+
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show save file dialog
+        File file = fileChooser.showOpenDialog(new Stage());
+
+        if (file != null) {
+            loadHolderDataFromFile(file);
+        }
+    }
+
+    /**
+     * Saves the file to the person file that is currently open. If there is no
+     * open file, the "save as" dialog is shown.
+     */
+    @FXML
+    private void handleSave() {
+        File holderFile = getHolderFilePath();
+        if (holderFile != null) {
+            saveHolderDataToFile(holderFile);
+        } else {
+            handleSaveAs();
+        }
+    }
+
+    /**
+     * Opens a FileChooser to let the user select a file to save to.
+     */
+    @FXML
+    private void handleSaveAs() {
+        FileChooser fileChooser = new FileChooser();
+
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show save file dialog
+        File file = fileChooser.showSaveDialog(new Stage());
+
+        if (file != null) {
+            // Make sure it has the correct extension
+            if (!file.getPath().endsWith(".xml")) {
+                file = new File(file.getPath() + ".xml");
+            }
+            saveHolderDataToFile(file);
+        }
+    }
+
+    /**
+     * Closes the application.
+     */
+    @FXML
+    private void handleExit() {
+        System.exit(0);
     }
 
 }

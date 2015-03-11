@@ -12,6 +12,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javax.xml.bind.annotation.XmlElement;
 
 /**
  *
@@ -23,13 +24,17 @@ public class Account implements Serializable {
 
         CHECKING, SAVINGS
     }
+
     private transient final DoubleProperty balance = new SimpleDoubleProperty(this, "balance");
+    
+    
+    
     private transient final ObjectProperty<Type> type = new SimpleObjectProperty<>(this, "type");
    // private final ListProperty<Double> transactions = new SimpleListProperty<>(this,"transactions");
 
     protected Account() {
     }
-
+    
     List<Double> transaction = new ArrayList<>();
 
     //constructor sets the initial balance of the account to $50
@@ -39,11 +44,15 @@ public class Account implements Serializable {
         this.transaction.add(this.getBalance());
         
     }
+    @XmlElement
+    private List<Double> getTransactions(){
+        return this.getAllTransactions();
+    }
 
     public Double getBalance() {
         return this.balance.get();
     }
-
+    @XmlElement
     protected void setBalance(Double value) {
         this.balance.set(value);
     }
@@ -105,6 +114,7 @@ public class Account implements Serializable {
     /*   Method that returns all of the transactions
      in an array list for the account created
      */
+    
     public  ArrayList<Double> getAllTransactions() {
         ArrayList<Double> copyList = new ArrayList<>();
         this.transaction.forEach((amt) -> {

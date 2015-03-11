@@ -14,6 +14,7 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javax.xml.bind.annotation.XmlElement;
 
 /**
  *
@@ -73,7 +74,9 @@ public class Holder implements Serializable {
         return sb.toString();
         }
     };
-   
+    protected Holder(){
+        this.id = count;
+    }
    
     
     public Holder(Holder holder){
