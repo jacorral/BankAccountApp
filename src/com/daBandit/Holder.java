@@ -14,6 +14,7 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javax.xml.bind.annotation.XmlElement;
 
 /**
  *
@@ -26,10 +27,11 @@ public class Holder implements Serializable {
     private final StringProperty firstname = new SimpleStringProperty(this, "firstname", "");
     private final StringProperty lastname = new SimpleStringProperty(this, "lastname", "");
     private final StringProperty userId = new SimpleStringProperty(this, "userId", "");
+   
     
-    public final ObjectProperty<Account> savings =
+    public transient final ObjectProperty<Account> savings =
             new SimpleObjectProperty<>(this, "savings", new Account(Account.Type.SAVINGS));
-    private final ObjectProperty<Account> checking =
+    private transient final ObjectProperty<Account> checking =
             new SimpleObjectProperty<>(this, "checking", new Account(Account.Type.CHECKING));
     
     private final StringBinding fullNameBinding = new StringBinding() {
@@ -73,7 +75,9 @@ public class Holder implements Serializable {
         return sb.toString();
         }
     };
-   
+    protected Holder(){
+        this.id = count;
+    }
    
     
     public Holder(Holder holder){
