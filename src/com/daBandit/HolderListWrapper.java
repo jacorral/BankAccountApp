@@ -24,4 +24,5 @@ import javax.xml.bind.annotation.XmlRootElement;
         public void setHolders(List<Holder> holders){
             this.holders = holders;
         }
+        
     }

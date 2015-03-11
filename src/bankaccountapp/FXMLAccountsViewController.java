@@ -171,7 +171,7 @@ public class FXMLAccountsViewController implements Initializable {
     }
 
     //Method to build the main view
-    private void buildView(Holder h) {
+    public void buildView(Holder h) {
         Locale locale = new Locale("en", "US");
         StringConverter sc = new DoubleStringConverter();
         currentCurrency = Currency.getInstance(locale);
@@ -217,7 +217,7 @@ public class FXMLAccountsViewController implements Initializable {
                 System.out.println("Name:  " + treeItem.getValue().getFirstname() + " "
                         + treeItem.getValue().getLastname());
                 System.out.println("Savings balance:  " + treeItem.getValue().getSavings().getBalance()
-                        + "  Transactions" + treeItem.getValue().getSavings().getAllTransactions());
+                        + "\nChecking balance: " + treeItem.getValue().getChecking().getBalance() + "\n");
                 buildView(theHolder);
                 reportTextArea.clear();
 
@@ -269,6 +269,7 @@ public class FXMLAccountsViewController implements Initializable {
         stage.setTitle("Deposit/Withdrawal");
         stage.setScene(scene);
         stage.show();
+        
         buildView(theHolder);
     }
 
@@ -286,6 +287,7 @@ public class FXMLAccountsViewController implements Initializable {
             HolderListWrapper wrapper = (HolderListWrapper) um.unmarshal(file);
             int count = wrapper.getHolders().size();
             List<Holder> holderList = new ArrayList<>(wrapper.getHolders());
+            
             for (int i = 0; i < count; i++) {
                 bank.addHolder(holderList.get(i));
             }
@@ -424,8 +426,6 @@ public class FXMLAccountsViewController implements Initializable {
             saveHolderDataToFile(file);
         }
     }
-
-   
 
     /**
      * Closes the application.
