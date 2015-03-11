@@ -3,71 +3,69 @@
     <holder>
         <id>1000</id>
         <checking>
-            <allTransactions>50.0</allTransactions>
-            <allTransactions>11234.56</allTransactions>
-            <allTransactions>-3456.33</allTransactions>
             <balance>7828.23</balance>
+            <transactions>50.0</transactions>
+            <transactions>11234.56</transactions>
+            <transactions>-3456.33</transactions>
             <type>CHECKING</type>
         </checking>
         <firstname>Mickey</firstname>
         <lastname>Mouse</lastname>
         <savings>
-            <allTransactions>50.0</allTransactions>
-            <allTransactions>24680.99</allTransactions>
             <balance>24730.99</balance>
+            <transactions>50.0</transactions>
+            <transactions>24680.99</transactions>
             <type>SAVINGS</type>
         </savings>
     </holder>
     <holder>
         <id>1001</id>
         <checking>
-            <allTransactions>50.0</allTransactions>
-            <allTransactions>9876.12</allTransactions>
-            <balance>9926.12</balance>
+            <balance>133060.12</balance>
+            <transactions>50.0</transactions>
+            <transactions>9876.12</transactions>
+            <transactions>123134.0</transactions>
             <type>CHECKING</type>
         </checking>
-        <firstname>Angel</firstname>
+        <firstname>Jose</firstname>
         <lastname>Corral</lastname>
         <savings>
-            <allTransactions>50.0</allTransactions>
-            <allTransactions>8945.23</allTransactions>
-            <balance>8995.23</balance>
+            <balance>32418.23</balance>
+            <transactions>50.0</transactions>
+            <transactions>8945.23</transactions>
+            <transactions>23423.0</transactions>
             <type>SAVINGS</type>
         </savings>
     </holder>
     <holder>
         <id>1002</id>
         <checking>
-            <allTransactions>50.0</allTransactions>
-            <allTransactions>8945.12</allTransactions>
             <balance>8995.12</balance>
+            <transactions>50.0</transactions>
+            <transactions>8945.12</transactions>
             <type>CHECKING</type>
         </checking>
         <firstname>Donald</firstname>
         <lastname>Duck</lastname>
         <savings>
-            <allTransactions>50.0</allTransactions>
-            <allTransactions>8645.89</allTransactions>
             <balance>8695.89</balance>
+            <transactions>50.0</transactions>
+            <transactions>8645.89</transactions>
             <type>SAVINGS</type>
         </savings>
     </holder>
     <holder>
         <id>1003</id>
         <checking>
-            <allTransactions>50.0</allTransactions>
-            <allTransactions>1234.0</allTransactions>
-            <allTransactions>10000.0</allTransactions>
-            <balance>11284.0</balance>
+            <balance>50.0</balance>
+            <transactions>50.0</transactions>
             <type>CHECKING</type>
         </checking>
         <firstname>Minnie</firstname>
         <lastname>Mouse</lastname>
         <savings>
-            <allTransactions>50.0</allTransactions>
-            <allTransactions>10000.0</allTransactions>
-            <allTransactions>10000.0</allTransactions>
-            <balance>20050.0</balance>
+            <balance>50.0</balance>
+            <transactions>50.0</transactions>
             <type>SAVINGS</type>
         </savings>
     </holder>
