@@ -5,7 +5,6 @@
  */
 package bankaccountapp;
 
-import com.daBandit.Account;
 import com.daBandit.Bank;
 import com.daBandit.Holder;
 import com.daBandit.HolderListWrapper;
@@ -13,7 +12,6 @@ import com.daBandit.InsufficientFundsException;
 import com.daBandit.InvalidAmountException;
 import java.io.File;
 import java.io.IOException;
-import static java.lang.StrictMath.abs;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -43,6 +41,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import javax.xml.bind.JAXBContext;
@@ -174,8 +173,8 @@ public class FXMLAccountsViewController implements Initializable {
 
     //Method to build the main view
     public void buildView(Holder h) {
-        //Locale locale = new Locale("en", "US");
-        Locale locale = new Locale("fr", "FR");
+        Locale locale = new Locale("en", "US");
+        //Locale locale = new Locale("fr", "FR");
         StringConverter sc = new DoubleStringConverter();
         currentCurrency = Currency.getInstance(locale);
         currencyFormatter = NumberFormat.getCurrencyInstance(locale);
@@ -271,9 +270,15 @@ public class FXMLAccountsViewController implements Initializable {
         Scene scene = new Scene(root);
         stage.setTitle("Deposit/Withdrawal");
         stage.setScene(scene);
+        stage.setOnCloseRequest((WindowEvent we)->{
+             buildView(theHolder);
+        });
+        stage.setOnHidden((WindowEvent we)->{
+             buildView(theHolder);
+        });
         stage.show();
         
-        buildView(theHolder);
+        
     }
 
     @FXML
