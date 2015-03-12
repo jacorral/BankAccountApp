@@ -11,12 +11,12 @@
       <Label layoutX="218.0" layoutY="88.0" text="Amount" />
       <Label layoutX="116.0" layoutY="146.0" text="Saving" GridPane.rowIndex="1" />
       <Label layoutX="116.0" layoutY="120.0" text="Checking" />
-      <TextField fx:id="withdrawlSavings" layoutX="172.0" layoutY="141.0" prefHeight="26.0" prefWidth="163.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <TextField fx:id="withdrawlChecking" layoutX="172.0" layoutY="115.0" prefHeight="25.0" prefWidth="163.0" GridPane.columnIndex="1">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </TextField>
-      <TextField fx:id="withdrawlChecking" layoutX="172.0" layoutY="115.0" prefHeight="25.0" prefWidth="163.0" GridPane.columnIndex="1">
+      <TextField fx:id="withdrawlSavings" layoutX="172.0" layoutY="141.0" prefHeight="26.0" prefWidth="163.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
@@ -30,6 +30,6 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <TextArea fx:id="exceptionText" layoutX="128.0" layoutY="14.0" prefHeight="71.0" prefWidth="235.0" wrapText="true" />
+      <TextArea fx:id="exceptionText" editable="false" layoutX="128.0" layoutY="14.0" prefHeight="71.0" prefWidth="235.0" wrapText="true" />
    </children>
 </AnchorPane>
