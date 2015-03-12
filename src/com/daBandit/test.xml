@@ -6,19 +6,24 @@
             <transaction>50.0</transaction>
             <transaction>11234.56</transaction>
             <transaction>-3456.33</transaction>
-            <transaction>10000.0</transaction>
             <transaction>-1234.0</transaction>
-            <balance>16594.23</balance>
+            <balance>6594.23</balance>
+            <transactions>50.0</transactions>
+            <transactions>11234.56</transactions>
+            <transactions>-3456.33</transactions>
+            <transactions>-1234.0</transactions>
             <type>CHECKING</type>
         </checking>
-        <firstname>Mickey Jr</firstname>
+        <firstname>Mickey</firstname>
         <lastname>Mouse</lastname>
         <savings>
             <transaction>50.0</transaction>
             <transaction>24680.99</transaction>
-            <transaction>10000.0</transaction>
-            <transaction>-2341.0</transaction>
-            <balance>32389.990000000005</balance>
+            <transaction>-242.0</transaction>
+            <balance>24488.99</balance>
+            <transactions>50.0</transactions>
+            <transactions>24680.99</transactions>
+            <transactions>-242.0</transactions>
             <type>SAVINGS</type>
         </savings>
     </holder>
@@ -28,6 +33,8 @@
             <transaction>50.0</transaction>
             <transaction>9876.12</transaction>
             <balance>9926.12</balance>
+            <transactions>50.0</transactions>
+            <transactions>9876.12</transactions>
             <type>CHECKING</type>
         </checking>
         <firstname>Angel</firstname>
@@ -36,6 +43,8 @@
             <transaction>50.0</transaction>
             <transaction>8945.23</transaction>
             <balance>8995.23</balance>
+            <transactions>50.0</transactions>
+            <transactions>8945.23</transactions>
             <type>SAVINGS</type>
         </savings>
     </holder>
@@ -45,6 +54,8 @@
             <transaction>50.0</transaction>
             <transaction>8945.12</transaction>
             <balance>8995.12</balance>
+            <transactions>50.0</transactions>
+            <transactions>8945.12</transactions>
             <type>CHECKING</type>
         </checking>
         <firstname>Donald</firstname>
@@ -53,6 +64,8 @@
             <transaction>50.0</transaction>
             <transaction>8645.89</transaction>
             <balance>8695.89</balance>
+            <transactions>50.0</transactions>
+            <transactions>8645.89</transactions>
             <type>SAVINGS</type>
         </savings>
     </holder>
@@ -61,6 +74,7 @@
         <checking>
             <transaction>50.0</transaction>
             <balance>50.0</balance>
+            <transactions>50.0</transactions>
             <type>CHECKING</type>
         </checking>
         <firstname>Minnie</firstname>
@@ -68,6 +82,7 @@
         <savings>
             <transaction>50.0</transaction>
             <balance>50.0</balance>
+            <transactions>50.0</transactions>
             <type>SAVINGS</type>
         </savings>
     </holder>

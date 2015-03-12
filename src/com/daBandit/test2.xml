@@ -77,16 +77,24 @@
         <id>1003</id>
         <checking>
             <transaction>50.0</transaction>
-            <balance>50.0</balance>
+            <transaction>10000.0</transaction>
+            <transaction>-879.0</transaction>
+            <balance>9171.0</balance>
             <transactions>50.0</transactions>
+            <transactions>10000.0</transactions>
+            <transactions>-879.0</transactions>
             <type>CHECKING</type>
         </checking>
         <firstname>Minnie</firstname>
         <lastname>Mouse</lastname>
         <savings>
             <transaction>50.0</transaction>
-            <balance>50.0</balance>
+            <transaction>10000.0</transaction>
+            <transaction>-456.0</transaction>
+            <balance>9594.0</balance>
             <transactions>50.0</transactions>
+            <transactions>10000.0</transactions>
+            <transactions>-456.0</transactions>
             <type>SAVINGS</type>
         </savings>
     </holder>

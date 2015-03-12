@@ -174,7 +174,8 @@ public class FXMLAccountsViewController implements Initializable {
 
     //Method to build the main view
     public void buildView(Holder h) {
-        Locale locale = new Locale("en", "US");
+        //Locale locale = new Locale("en", "US");
+        Locale locale = new Locale("fr", "FR");
         StringConverter sc = new DoubleStringConverter();
         currentCurrency = Currency.getInstance(locale);
         currencyFormatter = NumberFormat.getCurrencyInstance(locale);
