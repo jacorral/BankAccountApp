@@ -16,7 +16,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </TextField>
-      <TextField fx:id="withdrawlChecking" layoutX="172.0" layoutY="115.0" GridPane.columnIndex="1">
+      <TextField fx:id="withdrawlChecking" layoutX="172.0" layoutY="115.0" prefHeight="25.0" prefWidth="163.0" GridPane.columnIndex="1">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>

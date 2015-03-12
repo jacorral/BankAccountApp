@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "holders")
     public class HolderListWrapper{
         private List<Holder> holders;
+        private List<Double> transactions;
         
         @XmlElement(name = "holder")
         public List<Holder> getHolders(){
@@ -24,5 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
         public void setHolders(List<Holder> holders){
             this.holders = holders;
         }
+        
+      
         
     }

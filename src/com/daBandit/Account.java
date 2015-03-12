@@ -19,23 +19,22 @@ import javax.xml.bind.annotation.XmlElement;
  * @author Jose Corral
  */
 public class Account implements Serializable {
-
+    
+    //public List<Double> transaction;
     public enum Type {
 
         CHECKING, SAVINGS
     }
-
+    
     private transient final DoubleProperty balance = new SimpleDoubleProperty(this, "balance");
-    
-    
     
     private transient final ObjectProperty<Type> type = new SimpleObjectProperty<>(this, "type");
    // private final ListProperty<Double> transactions = new SimpleListProperty<>(this,"transactions");
 
     protected Account() {
     }
-    
-    List<Double> transaction = new ArrayList<>();
+    //@XmlElement(name = "transaction")
+    public List<Double> transaction = new ArrayList<>();
 
     //constructor sets the initial balance of the account to $50
     public Account(Account.Type type) {
@@ -44,10 +43,15 @@ public class Account implements Serializable {
         this.transaction.add(this.getBalance());
         
     }
-    @XmlElement
+     @XmlElement
+    public void setTransactions(List<Double> transaction){
+        this.transaction = transaction;
+    }
+  
     private List<Double> getTransactions(){
         return this.getAllTransactions();
     }
+   
 
     public Double getBalance() {
         return this.balance.get();
@@ -114,7 +118,7 @@ public class Account implements Serializable {
     /*   Method that returns all of the transactions
      in an array list for the account created
      */
-    
+     //@XmlElement(name = "transaction")
     public  ArrayList<Double> getAllTransactions() {
         ArrayList<Double> copyList = new ArrayList<>();
         this.transaction.forEach((amt) -> {
